@@ -1,0 +1,6 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\Libraries\CMSIS -I..\Libraries\FWlib\inc -I..\Libraries\FWlib\src -I..\User
+-I F:\stm32_project\STMQTT\Project\RTE
+-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0
+-I C:\Keil_v5\ARM\CMSIS\Include
+-DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d "..\User\main.c"
