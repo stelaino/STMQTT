@@ -23,10 +23,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
+#include "usart1.h"
+#include "usart2.h"
 
-
-
-
+extern uint32_t SystickTime;
+extern __IO uint32_t TimeDisplay;
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -138,6 +139,8 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+    //SystickTime_Increase();
+    //SystickTime++;
 }
 
 /******************************************************************************/
@@ -146,6 +149,77 @@ void SysTick_Handler(void)
 /*  available peripheral interrupt handler's name please refer to the startup */
 /*  file (startup_stm32f10x_xx.s).                                            */
 /******************************************************************************/
+
+//外部中断，存/取PE[15:7]数据
+void EXTI0_IRQHandler(void)
+{
+    
+}
+
+/**
+  * @brief  This function handles usart1 global interrupt request.
+  * @param  None
+  * @retval : None
+  */
+void USART1_IRQHandler(void)
+{
+	#if 0
+	unsigned int data;
+
+    if(USART1->SR & 0x0F)
+    {
+        // See if we have some kind of error
+        // Clear interrupt (do nothing about it!)
+        data = USART1->DR;
+    }
+    else if(USART1->SR & USART_FLAG_RXNE)      //Receive Data Reg Full Flag
+    {		
+        data = USART1->DR;
+				//usart1_putrxchar(data);     //Insert received character into buffer                     
+    }
+		else
+		{;}
+	#endif
+}
+
+/**
+  * @brief  This function handles usart2 global interrupt request.
+  * @param  None
+  * @retval : None
+  */
+void USART2_IRQHandler(void)
+{
+		unsigned int data;
+#if 1
+    if(USART2->SR & 0x0F)
+    {
+        // See if we have some kind of error
+        // Clear interrupt (do nothing about it!)
+        data = USART2->DR;
+    }
+    else if(USART2->SR & USART_FLAG_RXNE)   //Receive Data Reg Full Flag
+    {		//GPIO_SetBits(GPIOC,GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3);
+        data = USART2->DR;
+				usart2_rcv_buf[usart2_rcv_len++]=data;
+			  //usart1_rcv_buf[usart1_rcv_len++]=data;
+        //usart1_putrxchar(data);       //Insert received character into buffer                     
+    }
+		else
+		{
+				;
+		}
+		#endif
+}
+
+/**
+  * @brief  This function handles RTC global interrupt request.
+  * @param  None
+  * @retval : None
+  */
+void RTC_IRQHandler(void)
+{
+   
+}
 
 /**
   * @brief  This function handles PPP interrupt request.

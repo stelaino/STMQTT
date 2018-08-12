@@ -1,52 +1,22 @@
-#include <stm32f10x.h>
-
-
-void LED_Init(void)
-
-{
-
-   GPIO_InitTypeDef   GPIO_InitStructure;                  //定义结构体变量
-
-   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);    //时钟使能
-
-   GPIO_InitStructure.GPIO_Pin=GPIO_Pin_12;                 //哪个端口？
-
-   GPIO_InitStructure.GPIO_Mode=GPIO_Mode_Out_PP;          //推挽输出
-
-   GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;         //速度
-
-   GPIO_Init(GPIOB, &GPIO_InitStructure);                  //初始化
-
-   GPIO_SetBits(GPIOB,GPIO_Pin_12);                         //置位 点亮
-
- 
-
-}
-
-void Delay_ms(u32 time)  
-{  
-  u32 i=8000*time;  
-  while(i--);  
-}  
+#include "stm32f10x.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "usart1.h"
+#include "usart2.h"
+#include "utils.h"
+#include "esp8266.h"
+#include "hal_i2c.h"
+#include "mqtt_loop.h"
 
 int main(void)
-
-{ 
-
-	LED_Init();		         //LED函数初始化（函数声明）
-
-	while(1)
-
-	{
-
-		GPIO_ResetBits(GPIOB,GPIO_Pin_12);  //（复位函数）   0   低   亮
-		Delay_ms(6000);  		   
-		Delay_ms(6000);    
-		GPIO_SetBits(GPIOB,GPIO_Pin_12);	   // 重复复位              灭
-		Delay_ms(6000);    
-		Delay_ms(6000);    
-		
-	}
-
-} 
-
+{
+    USART1_Init();
+    USART2_Init();
+    mDelay(1000);
+    Hal_I2C_Init();
+    /*初始化8266，并连接CWJAP配置的AP，与MQTT_CIPSTART配置的服务器建立TCP连接*/
+    ESP8266_Init((int8_t *)MQTT_CIPSTART, (int8_t *)CWJAP);
+    /*进入MQTT协议测试主循环*/
+    MQTT_Loop();
+}

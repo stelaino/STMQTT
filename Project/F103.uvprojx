@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Template</TargetName>
+      <TargetName>MQTT</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Libraries\CMSIS;..\Libraries\FWlib\inc;..\Libraries\FWlib\src;..\User</IncludePath>
+              <IncludePath>..\Libraries\CMSIS;..\Libraries\FWlib\inc;..\Libraries\FWlib\src;..\User;..\Network\esp8266;..\Utils;..\Protocol\mqtt;..\Hal;..\Devices</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -706,7 +706,134 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DOC</GroupName>
+          <GroupName>PROTOCOL</GroupName>
+          <Files>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Protocol\mqtt\config.h</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt.h</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt_loop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt_loop.c</FilePath>
+            </File>
+            <File>
+              <FileName>mqtt_loop.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Protocol\mqtt\mqtt_loop.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>HAL</GroupName>
+          <Files>
+            <File>
+              <FileName>usart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hal\usart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Hal\usart1.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Hal\usart2.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Hal\usart2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>UTILS</GroupName>
+          <Files>
+            <File>
+              <FileName>cJSON.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utils\cJSON.c</FilePath>
+            </File>
+            <File>
+              <FileName>cJSON.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Utils\cJSON.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utils\utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Utils\utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>NETWORK</GroupName>
+          <Files>
+            <File>
+              <FileName>esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Network\esp8266\esp8266.c</FilePath>
+            </File>
+            <File>
+              <FileName>esp8266.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Network\esp8266\esp8266.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DEVICES</GroupName>
+          <Files>
+            <File>
+              <FileName>hal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Devices\hal_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Devices\hal_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sht20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Devices\sht20.c</FilePath>
+            </File>
+            <File>
+              <FileName>sht20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Devices\sht20.h</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

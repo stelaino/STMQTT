@@ -29,3 +29,8 @@
 .\objects\stm32f10x_it.o: ..\Libraries\FWlib\inc\stm32f10x_usart.h
 .\objects\stm32f10x_it.o: ..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 .\objects\stm32f10x_it.o: ..\Libraries\FWlib\inc\misc.h
+.\objects\stm32f10x_it.o: ..\Hal\usart1.h
+.\objects\stm32f10x_it.o: ..\Hal\usart2.h
+.\objects\stm32f10x_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\stm32f10x_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\stm32f10x_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
