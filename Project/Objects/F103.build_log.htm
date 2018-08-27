@@ -5,23 +5,54 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.12.0.0
 Copyright (C) 2014 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: genie genie, genie, LIC=HN08T-R85XX-Y7ERW-Q5B4X-6CJLS-LDJYZ
+License Information: genie genie, genie, LIC=KRMZ9-4WJD3-CXAU6-DQIV6-LK2DT-S0B3X
  
 Tool Versions:
-Toolchain:       MDK-ARM Standard  Version: <unknown>
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\bin\
+Toolchain:       MDK-ARM Standard  Version: 5.12.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 (build 41)
 Assembler:       Armasm.exe V5.05 (build 41)
 Linker/Locator:  ArmLink.exe V5.05 (build 41)
 Library Manager: ArmAr.exe V5.05 (build 41)
 Hex Converter:   FromElf.exe V5.05 (build 41)
-CPU DLL:         SARMCM3.DLL
-Dialog DLL:      DCM.DLL
+CPU DLL:         SARMCM3.DLL V5.12.0.0
+Dialog DLL:      DCM.DLL V1.13.0.0
     Target DLL: STLink\ST-LINKIII-KEIL_SWO.dll
-Dialog DLL:      TCM.DLL
+Dialog DLL:      TCM.DLL V1.14.2.0
  
 <h2>Project:</h2>
-C:\Users\genie\Desktop\STMQTT\Project\F103.uvprojx
-Project File Date:  05/20/2018
+F:\stm32_project\STMQTT\Project\F103.uvprojx
+Project File Date:  08/27/2018
 
 <h2>Output:</h2>
+Build target 'MQTT'
+compiling mqtt_loop.c...
+..\Protocol\mqtt\mqtt_loop.c(321): warning:  #550-D: variable "hum" was set but never used
+      int hum=0;
+..\Protocol\mqtt\mqtt_loop.c(385): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                sprintf(stemp,"%.2f",temp);
+..\Protocol\mqtt\mqtt_loop.c(386): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                sprintf(shum,"%.2f",hum);
+..\Protocol\mqtt\mqtt_loop.c(420): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *"
+                                memcpy(&ext->payload[0], dis[ir_index],strlen(dis[ir_index]));
+..\Protocol\mqtt\mqtt_loop.c(295): warning:  #177-D: function "MqttSample_CmdPing" was declared but never referenced
+  static int MqttSample_CmdPing(struct MqttSampleContext *ctx)
+..\Protocol\mqtt\mqtt_loop.c(315): warning:  #177-D: function "MqttSample_CmdPublish" was declared but never referenced
+  static int MqttSample_CmdPublish(struct MqttSampleContext *ctx)
+..\Protocol\mqtt\mqtt_loop.c: 6 warnings, 0 errors
+linking...
+Program Size: Code=23904 RO-data=2216 RW-data=76 ZI-data=2572  
+".\Objects\F103.axf" - 0 Error(s), 6 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  F:\stm32_project\STMQTT\Project\RTE
+  C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0
+
+<h2>Collection of Component Files used:</h2>
+Load "F:\\stm32_project\\STMQTT\\Project\\Objects\\F103.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+</pre>
+</body>
+</html>

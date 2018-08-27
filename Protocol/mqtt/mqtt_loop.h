@@ -18,11 +18,12 @@
 
 #include "usart2.h"
 
-#define DS_TO_PUBLISH "mqtt_msg"
+#define SE_DP "dp"
+#define DS_TO_PUBLISH "Stmqtt_State"
 
-#define DS_TO_PUBLISH_T "mqtt_msg_t"
+#define DS_TO_PUBLISH_T "Dev_Temp"
 
-#define DS_TO_PUBLISH_RH "mqtt_msg_rh"
+#define DS_TO_PUBLISH_RH "Dev_Hum"
 
 #define TOPIC_TO_SUB "132085/sucavEg3rsFzCDo5MDiHURAhzo8=/29621524/caramel"
 #define PACK_FALG_UNSUB 11

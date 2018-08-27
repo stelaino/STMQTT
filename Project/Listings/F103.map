@@ -7,6 +7,7 @@ Section Cross References
     startup_stm32f10x_hd.o(RESET) refers to startup_stm32f10x_hd.o(STACK) for __initial_sp
     startup_stm32f10x_hd.o(RESET) refers to startup_stm32f10x_hd.o(.text) for Reset_Handler
     startup_stm32f10x_hd.o(RESET) refers to stm32f10x_it.o(.text) for NMI_Handler
+    startup_stm32f10x_hd.o(RESET) refers to timer.o(.text) for SysTick_Handler
     startup_stm32f10x_hd.o(.text) refers to system_stm32f10x.o(.text) for SystemInit
     startup_stm32f10x_hd.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     system_stm32f10x.o(.text) refers to system_stm32f10x.o(.data) for SystemCoreClock
@@ -25,6 +26,8 @@ Section Cross References
     stm32f10x_wwdg.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB1PeriphResetCmd
     main.o(.text) refers to usart1.o(.text) for USART1_Init
     main.o(.text) refers to usart2.o(.text) for USART2_Init
+    main.o(.text) refers to system_stm32f10x.o(.text) for SystemInit
+    main.o(.text) refers to timer.o(.text) for systick_init
     main.o(.text) refers to utils.o(.text) for mDelay
     main.o(.text) refers to hal_i2c.o(.text) for Hal_I2C_Init
     main.o(.text) refers to esp8266.o(.text) for ESP8266_Init
@@ -65,10 +68,16 @@ Section Cross References
     mqtt_loop.o(.text) refers to strlen.o(.text) for strlen
     mqtt_loop.o(.text) refers to mqtt.o(.text) for Mqtt_PackConnectPkt
     mqtt_loop.o(.text) refers to mqtt_buffer.o(.text) for MqttBuffer_Reset
-    mqtt_loop.o(.text) refers to printfa.o(i.__0sprintf) for __2sprintf
     mqtt_loop.o(.text) refers to mqtt_loop.o(.bss) for send_buf
     mqtt_loop.o(.text) refers to mqtt_loop.o(.constdata) for __func__
     mqtt_loop.o(.text) refers to mqtt_loop.o(.conststring) for .conststring
+    mqtt_loop.o(.text) refers to dht11.o(.text) for dht11_read_data
+    mqtt_loop.o(.text) refers to dfltui.o(.text) for __aeabi_ui2d
+    mqtt_loop.o(.text) refers to ddiv.o(.text) for __aeabi_ddiv
+    mqtt_loop.o(.text) refers to dadd.o(.text) for __aeabi_dadd
+    mqtt_loop.o(.text) refers to dmul.o(.text) for __aeabi_dmul
+    mqtt_loop.o(.text) refers to dfixi.o(.text) for __aeabi_d2iz
+    mqtt_loop.o(.text) refers to printfa.o(i.__0sprintf) for __2sprintf
     mqtt_loop.o(.text) refers to mqtt_loop.o(.data) for count
     usart1.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     usart1.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
@@ -136,6 +145,16 @@ Section Cross References
     sht20.o(.text) refers to printfa.o(i.__0printf) for __2printf
     sht20.o(.text) refers to ffixui.o(.text) for __aeabi_f2uiz
     sht20.o(.text) refers to sht20.o(.constdata) for __func__
+    dht11.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
+    dht11.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
+    dht11.o(.text) refers to timer.o(.text) for delay_us
+    timer.o(.text) refers to system_stm32f10x.o(.data) for SystemCoreClock
+    timer.o(.text) refers to timer.o(.data) for gTimingDelay
+    usart.o(.text) refers to stm32f10x_usart.o(.text) for USART_Init
+    usart.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
+    usart.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
+    usart.o(.text) refers to strlen.o(.text) for strlen
+    usart.o(.text) refers to printfa.o(i.__0vsprintf) for __c89vsprintf
     floor.o(i.__softfp_floor) refers (Special) to iusefp.o(.text) for __I$use$fp
     floor.o(i.__softfp_floor) refers to floor.o(i.floor) for floor
     floor.o(i.floor) refers (Special) to iusefp.o(.text) for __I$use$fp
@@ -479,10 +498,14 @@ Section Cross References
     dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
     dmul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    ddiv.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
     ffltui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     ffltui.o(.text) refers to fepilogue.o(.text) for _float_epilogue
     dflti.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dflti.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dfltui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfltui.o(.text) refers to depilogue.o(.text) for _double_epilogue
     ffixui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dfixi.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
     dfixi.o(.text) refers to llushr.o(.text) for __aeabi_llsr
@@ -531,7 +554,6 @@ Section Cross References
     errno.o(i.__set_errno) refers to errno.o(.data) for .data
     depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
-    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
     dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
     init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
@@ -569,10 +591,10 @@ Removing Unused input sections from the image.
     Removing cjson.o(.data), (12 bytes).
     Removing sht20.o(.text), (1708 bytes).
     Removing sht20.o(.constdata), (51 bytes).
+    Removing usart.o(.text), (232 bytes).
     Removing ffltui.o(.text), (10 bytes).
     Removing dflti.o(.text), (34 bytes).
     Removing ffixui.o(.text), (40 bytes).
-    Removing dfixi.o(.text), (62 bytes).
     Removing f2d.o(.text), (38 bytes).
     Removing cdcmple.o(.text), (48 bytes).
     Removing d2f.o(.text), (56 bytes).
@@ -580,7 +602,7 @@ Removing Unused input sections from the image.
     Removing dscalb.o(.text), (46 bytes).
     Removing dsqrt.o(.text), (162 bytes).
 
-36 unused section(s) (total 23600 bytes) removed from the image.
+36 unused section(s) (total 23770 bytes) removed from the image.
 
 ==============================================================================
 
@@ -591,36 +613,36 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isupper_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isxdigit_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  iscntrl_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isblank_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isalpha_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isalnum_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isdigit_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isgraph_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  islower_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isprint_o.o ABSOLUTE
-    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  ispunct_o.o ABSOLUTE
     ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  ctype_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isgraph_o.o ABSOLUTE
     ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isspace_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  islower_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isalnum_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isprint_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  iscntrl_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isxdigit_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  ispunct_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isalpha_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isblank_o.o ABSOLUTE
+    ../clib/microlib/ctype/ctype.c           0x00000000   Number         0  isdigit_o.o ABSOLUTE
     ../clib/microlib/ctype/tolower.c         0x00000000   Number         0  tolower.o ABSOLUTE
-    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
-    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  ldiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/errno.c                 0x00000000   Number         0  errno.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
@@ -629,22 +651,22 @@ Image Symbol Table
     ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  mallocr.o ABSOLUTE
     ../clib/microlib/malloc/malloc.c         0x00000000   Number         0  malloc.o ABSOLUTE
     ../clib/microlib/malloc/mvars.c          0x00000000   Number         0  mvars.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
-    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memmoveb.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memmovea.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memmoveb.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
     ../clib/microlib/string/strchr.c         0x00000000   Number         0  strchr.o ABSOLUTE
@@ -661,12 +683,13 @@ Image Symbol Table
     ../fplib/microlib/f2d.c                  0x00000000   Number         0  f2d.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
-    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  fepilogue.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
+    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixui.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixi.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  ffltui.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
     ../fplib/microlib/fpscalb.c              0x00000000   Number         0  dscalb.o ABSOLUTE
@@ -680,8 +703,11 @@ Image Symbol Table
     ../mathlib/qnan.c                        0x00000000   Number         0  qnan.o ABSOLUTE
     ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt.o ABSOLUTE
     ../mathlib/sqrt.c                        0x00000000   Number         0  sqrt_x.o ABSOLUTE
+    ..\Devices\dht11.c                       0x00000000   Number         0  dht11.o ABSOLUTE
     ..\Devices\hal_i2c.c                     0x00000000   Number         0  hal_i2c.o ABSOLUTE
     ..\Devices\sht20.c                       0x00000000   Number         0  sht20.o ABSOLUTE
+    ..\Devices\timer.c                       0x00000000   Number         0  timer.o ABSOLUTE
+    ..\Devices\usart.c                       0x00000000   Number         0  usart.o ABSOLUTE
     ..\Hal\usart1.c                          0x00000000   Number         0  usart1.o ABSOLUTE
     ..\Hal\usart2.c                          0x00000000   Number         0  usart2.o ABSOLUTE
     ..\Libraries\CMSIS\core_cm3.c            0x00000000   Number         0  core_cm3.o ABSOLUTE
@@ -745,116 +771,125 @@ Image Symbol Table
     .text                                    0x08000b84   Section        0  stm32f10x_rcc.o(.text)
     .text                                    0x08000f28   Section        0  stm32f10x_usart.o(.text)
     .text                                    0x08001330   Section        0  main.o(.text)
-    .text                                    0x080013a8   Section        0  stm32f10x_it.o(.text)
-    .text                                    0x08001408   Section        0  mqtt.o(.text)
-    Mqtt_IsLegalUtf8                         0x080015df   Thumb Code   200  mqtt.o(.text)
-    Mqtt_CheckUtf8                           0x080016a7   Thumb Code    76  mqtt.o(.text)
-    Mqtt_PackPubAckPkt                       0x080018b3   Thumb Code    66  mqtt.o(.text)
-    Mqtt_PackPubRecPkt                       0x080018f5   Thumb Code    66  mqtt.o(.text)
-    Mqtt_HandlePublish                       0x08001937   Thumb Code   682  mqtt.o(.text)
-    Mqtt_PackPubRelPkt                       0x08001c17   Thumb Code    70  mqtt.o(.text)
-    Mqtt_PackPubCompPkt                      0x08001ccd   Thumb Code    78  mqtt.o(.text)
-    Mqtt_Dispatch                            0x08001e4f   Thumb Code   190  mqtt.o(.text)
-    Mqtt_AppendDP                            0x080027c7   Thumb Code   354  mqtt.o(.text)
-    Mqtt_AppendDPSubvalue                    0x08002bf3   Thumb Code   236  mqtt.o(.text)
-    .text                                    0x08002fec   Section        0  mqtt_buffer.o(.text)
-    .text                                    0x0800318c   Section        0  mqtt_loop.o(.text)
-    MqttSample_RecvPkt                       0x0800318d   Thumb Code   108  mqtt_loop.o(.text)
-    MqttSample_SendPkt                       0x080031f9   Thumb Code   142  mqtt_loop.o(.text)
-    MqttSample_HandleConnAck                 0x08003287   Thumb Code    22  mqtt_loop.o(.text)
-    MqttSample_HandlePingResp                0x0800329d   Thumb Code    14  mqtt_loop.o(.text)
-    MqttSample_HandlePublish                 0x080032ab   Thumb Code    56  mqtt_loop.o(.text)
-    MqttSample_HandlePubAck                  0x080032e3   Thumb Code    18  mqtt_loop.o(.text)
-    MqttSample_HandlePubRec                  0x080032f5   Thumb Code    24  mqtt_loop.o(.text)
-    MqttSample_HandlePubRel                  0x0800330d   Thumb Code    24  mqtt_loop.o(.text)
-    MqttSample_HandlePubComp                 0x08003325   Thumb Code    40  mqtt_loop.o(.text)
-    MqttSample_HandleSubAck                  0x0800334d   Thumb Code    58  mqtt_loop.o(.text)
-    MqttSample_HandleUnsubAck                0x08003387   Thumb Code    18  mqtt_loop.o(.text)
-    MqttSample_HandleCmd                     0x08003399   Thumb Code   230  mqtt_loop.o(.text)
-    MqttSample_CmdConnect                    0x0800347f   Thumb Code   118  mqtt_loop.o(.text)
-    MqttSample_CmdPublishNormal              0x080034f5   Thumb Code  1472  mqtt_loop.o(.text)
-    MqttSample_CmdSubscribe                  0x08003ab5   Thumb Code   100  mqtt_loop.o(.text)
-    MqttSample_Init                          0x08003b19   Thumb Code   142  mqtt_loop.o(.text)
-    .text                                    0x08003e74   Section        0  usart1.o(.text)
-    .text                                    0x08003f64   Section        0  usart2.o(.text)
-    .text                                    0x080040f0   Section        0  utils.o(.text)
-    .text                                    0x080041b0   Section        0  esp8266.o(.text)
-    .text                                    0x080042ec   Section        0  hal_i2c.o(.text)
-    .text                                    0x0800460c   Section        0  ldiv.o(.text)
-    .text                                    0x08004670   Section        0  ctype_o.o(.text)
-    .text                                    0x08004678   Section        0  localtime.o(.text)
-    .text                                    0x0800470c   Section        0  strftime.o(.text)
-    .text                                    0x0800498c   Section        0  memmovea.o(.text)
-    .text                                    0x080049cc   Section        0  memseta.o(.text)
-    .text                                    0x080049f0   Section        0  strstr.o(.text)
-    .text                                    0x08004a14   Section        0  strlen.o(.text)
-    .text                                    0x08004a22   Section        0  strcpy.o(.text)
-    .text                                    0x08004a34   Section        0  dadd.o(.text)
-    .text                                    0x08004b82   Section        0  dmul.o(.text)
-    .text                                    0x08004c68   Section       48  cdrcmple.o(.text)
-    .text                                    0x08004c98   Section        0  uidiv.o(.text)
-    .text                                    0x08004cc4   Section        0  uldiv.o(.text)
-    .text                                    0x08004d26   Section        0  llshl.o(.text)
-    .text                                    0x08004d44   Section        0  llushr.o(.text)
-    .text                                    0x08004d64   Section        0  llsshr.o(.text)
-    .text                                    0x08004d88   Section        0  depilogue.o(.text)
-    .text                                    0x08004d88   Section        0  iusefp.o(.text)
-    .text                                    0x08004e42   Section        0  ddiv.o(.text)
-    .text                                    0x08004f20   Section        0  dfixul.o(.text)
-    .text                                    0x08004f50   Section       36  init.o(.text)
-    i.__0printf                              0x08004f74   Section        0  printfa.o(i.__0printf)
-    i.__0snprintf                            0x08004f94   Section        0  printfa.o(i.__0snprintf)
-    i.__0sprintf                             0x08004fbc   Section        0  printfa.o(i.__0sprintf)
-    i.__scatterload_copy                     0x08004fe4   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08004ff2   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08004ff4   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i._fp_digits                             0x08005004   Section        0  printfa.o(i._fp_digits)
-    _fp_digits                               0x08005005   Thumb Code   334  printfa.o(i._fp_digits)
-    i._printf_core                           0x08005168   Section        0  printfa.o(i._printf_core)
-    _printf_core                             0x08005169   Thumb Code  1744  printfa.o(i._printf_core)
-    i._printf_post_padding                   0x08005844   Section        0  printfa.o(i._printf_post_padding)
-    _printf_post_padding                     0x08005845   Thumb Code    36  printfa.o(i._printf_post_padding)
-    i._printf_pre_padding                    0x08005868   Section        0  printfa.o(i._printf_pre_padding)
-    _printf_pre_padding                      0x08005869   Thumb Code    46  printfa.o(i._printf_pre_padding)
-    i._snputc                                0x08005896   Section        0  printfa.o(i._snputc)
-    _snputc                                  0x08005897   Thumb Code    22  printfa.o(i._snputc)
-    i._sputc                                 0x080058ac   Section        0  printfa.o(i._sputc)
-    _sputc                                   0x080058ad   Thumb Code    10  printfa.o(i._sputc)
-    i.free                                   0x080058b8   Section        0  malloc.o(i.free)
-    i.malloc                                 0x08005908   Section        0  malloc.o(i.malloc)
-    .constdata                               0x08005974   Section      342  mqtt.o(.constdata)
-    Mqtt_TrailingBytesForUTF8                0x08005974   Data         256  mqtt.o(.constdata)
-    __func__                                 0x08005a74   Data          14  mqtt.o(.constdata)
-    __func__                                 0x08005a82   Data          13  mqtt.o(.constdata)
-    __func__                                 0x08005a8f   Data          20  mqtt.o(.constdata)
-    __func__                                 0x08005aa3   Data          19  mqtt.o(.constdata)
-    __func__                                 0x08005ab6   Data          20  mqtt.o(.constdata)
-    .constdata                               0x08005aca   Section       23  mqtt_buffer.o(.constdata)
-    __func__                                 0x08005aca   Data          23  mqtt_buffer.o(.constdata)
-    .constdata                               0x08005ae4   Section      336  mqtt_loop.o(.constdata)
-    __func__                                 0x08005ae4   Data          19  mqtt_loop.o(.constdata)
-    __func__                                 0x08005af7   Data          25  mqtt_loop.o(.constdata)
-    __func__                                 0x08005b10   Data          24  mqtt_loop.o(.constdata)
-    __func__                                 0x08005b28   Data          22  mqtt_loop.o(.constdata)
-    __func__                                 0x08005b3e   Data          28  mqtt_loop.o(.constdata)
-    __func__                                 0x08005c1c   Data          24  mqtt_loop.o(.constdata)
-    .constdata                               0x08005c34   Section        8  usart2.o(.constdata)
-    __func__                                 0x08005c34   Data           8  usart2.o(.constdata)
-    .constdata                               0x08005c3c   Section      512  utils.o(.constdata)
-    aucCRCHi                                 0x08005c3c   Data         256  utils.o(.constdata)
-    aucCRCLo                                 0x08005d3c   Data         256  utils.o(.constdata)
-    .constdata                               0x08005e3c   Section       59  hal_i2c.o(.constdata)
-    __func__                                 0x08005e3c   Data          23  hal_i2c.o(.constdata)
-    __func__                                 0x08005e53   Data          13  hal_i2c.o(.constdata)
-    __func__                                 0x08005e60   Data          23  hal_i2c.o(.constdata)
-    .constdata                               0x08005e77   Section      129  ctype_o.o(.constdata)
-    .constdata                               0x08005ef8   Section        4  ctype_o.o(.constdata)
-    table                                    0x08005ef8   Data           4  ctype_o.o(.constdata)
-    .constdata                               0x08005efc   Section       12  localtime.o(.constdata)
-    monlen                                   0x08005efc   Data          12  localtime.o(.constdata)
-    .constdata                               0x08005f08   Section       86  strftime.o(.constdata)
-    .conststring                             0x08005f60   Section      203  mqtt_loop.o(.conststring)
-    .conststring                             0x0800602c   Section       96  hal_i2c.o(.conststring)
+    .text                                    0x080013b0   Section        0  stm32f10x_it.o(.text)
+    .text                                    0x08001410   Section        0  mqtt.o(.text)
+    Mqtt_IsLegalUtf8                         0x080015e7   Thumb Code   200  mqtt.o(.text)
+    Mqtt_CheckUtf8                           0x080016af   Thumb Code    76  mqtt.o(.text)
+    Mqtt_PackPubAckPkt                       0x080018bb   Thumb Code    66  mqtt.o(.text)
+    Mqtt_PackPubRecPkt                       0x080018fd   Thumb Code    66  mqtt.o(.text)
+    Mqtt_HandlePublish                       0x0800193f   Thumb Code   682  mqtt.o(.text)
+    Mqtt_PackPubRelPkt                       0x08001c1f   Thumb Code    70  mqtt.o(.text)
+    Mqtt_PackPubCompPkt                      0x08001cd5   Thumb Code    78  mqtt.o(.text)
+    Mqtt_Dispatch                            0x08001e57   Thumb Code   190  mqtt.o(.text)
+    Mqtt_AppendDP                            0x080027cf   Thumb Code   354  mqtt.o(.text)
+    Mqtt_AppendDPSubvalue                    0x08002c3b   Thumb Code   236  mqtt.o(.text)
+    .text                                    0x08003038   Section        0  mqtt_buffer.o(.text)
+    .text                                    0x080031d8   Section        0  mqtt_loop.o(.text)
+    MqttSample_RecvPkt                       0x080031d9   Thumb Code   108  mqtt_loop.o(.text)
+    MqttSample_SendPkt                       0x08003245   Thumb Code   142  mqtt_loop.o(.text)
+    MqttSample_HandleConnAck                 0x080032d3   Thumb Code    22  mqtt_loop.o(.text)
+    MqttSample_HandlePingResp                0x080032e9   Thumb Code    14  mqtt_loop.o(.text)
+    MqttSample_HandlePublish                 0x080032f7   Thumb Code    56  mqtt_loop.o(.text)
+    MqttSample_HandlePubAck                  0x0800332f   Thumb Code    18  mqtt_loop.o(.text)
+    MqttSample_HandlePubRec                  0x08003341   Thumb Code    24  mqtt_loop.o(.text)
+    MqttSample_HandlePubRel                  0x08003359   Thumb Code    24  mqtt_loop.o(.text)
+    MqttSample_HandlePubComp                 0x08003371   Thumb Code    40  mqtt_loop.o(.text)
+    MqttSample_HandleSubAck                  0x08003399   Thumb Code    58  mqtt_loop.o(.text)
+    MqttSample_HandleUnsubAck                0x080033d3   Thumb Code    18  mqtt_loop.o(.text)
+    MqttSample_HandleCmd                     0x080033e5   Thumb Code   230  mqtt_loop.o(.text)
+    MqttSample_CmdConnect                    0x080034cb   Thumb Code   118  mqtt_loop.o(.text)
+    MqttSample_CmdPing                       0x08003541   Thumb Code   924  mqtt_loop.o(.text)
+    MqttSample_CmdPublish                    0x080038dd   Thumb Code   370  mqtt_loop.o(.text)
+    MqttSample_CmdPublishNormal              0x08003a4f   Thumb Code   932  mqtt_loop.o(.text)
+    MqttSample_CmdSubscribe                  0x08003df3   Thumb Code   100  mqtt_loop.o(.text)
+    MqttSample_Init                          0x08003e57   Thumb Code   142  mqtt_loop.o(.text)
+    .text                                    0x08004140   Section        0  usart1.o(.text)
+    .text                                    0x08004230   Section        0  usart2.o(.text)
+    .text                                    0x080043bc   Section        0  utils.o(.text)
+    .text                                    0x0800447c   Section        0  esp8266.o(.text)
+    .text                                    0x080045b8   Section        0  hal_i2c.o(.text)
+    .text                                    0x080048d8   Section        0  dht11.o(.text)
+    .text                                    0x08004a34   Section        0  timer.o(.text)
+    .text                                    0x08004ad0   Section        0  ldiv.o(.text)
+    .text                                    0x08004b34   Section        0  ctype_o.o(.text)
+    .text                                    0x08004b3c   Section        0  localtime.o(.text)
+    .text                                    0x08004bd0   Section        0  strftime.o(.text)
+    .text                                    0x08004e50   Section        0  memmovea.o(.text)
+    .text                                    0x08004e90   Section        0  memseta.o(.text)
+    .text                                    0x08004eb4   Section        0  strstr.o(.text)
+    .text                                    0x08004ed8   Section        0  strlen.o(.text)
+    .text                                    0x08004ee6   Section        0  strcpy.o(.text)
+    .text                                    0x08004ef8   Section        0  dadd.o(.text)
+    .text                                    0x08005046   Section        0  dmul.o(.text)
+    .text                                    0x0800512a   Section        0  ddiv.o(.text)
+    .text                                    0x08005208   Section        0  dfltui.o(.text)
+    .text                                    0x08005222   Section        0  dfixi.o(.text)
+    .text                                    0x08005260   Section       48  cdrcmple.o(.text)
+    .text                                    0x08005290   Section        0  uidiv.o(.text)
+    .text                                    0x080052bc   Section        0  uldiv.o(.text)
+    .text                                    0x0800531e   Section        0  llshl.o(.text)
+    .text                                    0x0800533c   Section        0  llushr.o(.text)
+    .text                                    0x0800535c   Section        0  llsshr.o(.text)
+    .text                                    0x08005380   Section        0  iusefp.o(.text)
+    .text                                    0x08005380   Section        0  depilogue.o(.text)
+    .text                                    0x0800543a   Section        0  dfixul.o(.text)
+    .text                                    0x0800546c   Section       36  init.o(.text)
+    i.__0printf                              0x08005490   Section        0  printfa.o(i.__0printf)
+    i.__0snprintf                            0x080054b0   Section        0  printfa.o(i.__0snprintf)
+    i.__0sprintf                             0x080054d8   Section        0  printfa.o(i.__0sprintf)
+    i.__scatterload_copy                     0x08005500   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x0800550e   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08005510   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i._fp_digits                             0x08005520   Section        0  printfa.o(i._fp_digits)
+    _fp_digits                               0x08005521   Thumb Code   334  printfa.o(i._fp_digits)
+    i._printf_core                           0x08005684   Section        0  printfa.o(i._printf_core)
+    _printf_core                             0x08005685   Thumb Code  1744  printfa.o(i._printf_core)
+    i._printf_post_padding                   0x08005d60   Section        0  printfa.o(i._printf_post_padding)
+    _printf_post_padding                     0x08005d61   Thumb Code    36  printfa.o(i._printf_post_padding)
+    i._printf_pre_padding                    0x08005d84   Section        0  printfa.o(i._printf_pre_padding)
+    _printf_pre_padding                      0x08005d85   Thumb Code    46  printfa.o(i._printf_pre_padding)
+    i._snputc                                0x08005db2   Section        0  printfa.o(i._snputc)
+    _snputc                                  0x08005db3   Thumb Code    22  printfa.o(i._snputc)
+    i._sputc                                 0x08005dc8   Section        0  printfa.o(i._sputc)
+    _sputc                                   0x08005dc9   Thumb Code    10  printfa.o(i._sputc)
+    i.free                                   0x08005dd4   Section        0  malloc.o(i.free)
+    i.malloc                                 0x08005e24   Section        0  malloc.o(i.malloc)
+    .constdata                               0x08005e90   Section      367  mqtt.o(.constdata)
+    Mqtt_TrailingBytesForUTF8                0x08005e90   Data         256  mqtt.o(.constdata)
+    __func__                                 0x08005f90   Data          14  mqtt.o(.constdata)
+    __func__                                 0x08005f9e   Data          13  mqtt.o(.constdata)
+    __func__                                 0x08005fab   Data          20  mqtt.o(.constdata)
+    __func__                                 0x08005fbf   Data          19  mqtt.o(.constdata)
+    __func__                                 0x08005fd2   Data          20  mqtt.o(.constdata)
+    __func__                                 0x08005fe6   Data          25  mqtt.o(.constdata)
+    .constdata                               0x08005fff   Section       23  mqtt_buffer.o(.constdata)
+    __func__                                 0x08005fff   Data          23  mqtt_buffer.o(.constdata)
+    .constdata                               0x08006018   Section      376  mqtt_loop.o(.constdata)
+    __func__                                 0x08006018   Data          19  mqtt_loop.o(.constdata)
+    __func__                                 0x0800602b   Data          25  mqtt_loop.o(.constdata)
+    __func__                                 0x08006044   Data          24  mqtt_loop.o(.constdata)
+    __func__                                 0x0800605c   Data          22  mqtt_loop.o(.constdata)
+    __func__                                 0x08006072   Data          19  mqtt_loop.o(.constdata)
+    __func__                                 0x08006085   Data          22  mqtt_loop.o(.constdata)
+    __func__                                 0x0800609b   Data          28  mqtt_loop.o(.constdata)
+    __func__                                 0x08006178   Data          24  mqtt_loop.o(.constdata)
+    .constdata                               0x08006190   Section        8  usart2.o(.constdata)
+    __func__                                 0x08006190   Data           8  usart2.o(.constdata)
+    .constdata                               0x08006198   Section      512  utils.o(.constdata)
+    aucCRCHi                                 0x08006198   Data         256  utils.o(.constdata)
+    aucCRCLo                                 0x08006298   Data         256  utils.o(.constdata)
+    .constdata                               0x08006398   Section       59  hal_i2c.o(.constdata)
+    __func__                                 0x08006398   Data          23  hal_i2c.o(.constdata)
+    __func__                                 0x080063af   Data          13  hal_i2c.o(.constdata)
+    __func__                                 0x080063bc   Data          23  hal_i2c.o(.constdata)
+    .constdata                               0x080063d3   Section      129  ctype_o.o(.constdata)
+    .constdata                               0x08006454   Section        4  ctype_o.o(.constdata)
+    table                                    0x08006454   Data           4  ctype_o.o(.constdata)
+    .constdata                               0x08006458   Section       12  localtime.o(.constdata)
+    monlen                                   0x08006458   Data          12  localtime.o(.constdata)
+    .constdata                               0x08006464   Section       86  strftime.o(.constdata)
+    .conststring                             0x080064bc   Section      203  mqtt_loop.o(.conststring)
+    .conststring                             0x08006588   Section       96  hal_i2c.o(.conststring)
     .data                                    0x20000000   Section       20  system_stm32f10x.o(.data)
     .data                                    0x20000014   Section       20  stm32f10x_rcc.o(.data)
     APBAHBPrescTable                         0x20000014   Data          16  stm32f10x_rcc.o(.data)
@@ -863,15 +898,16 @@ Image Symbol Table
     count                                    0x20000030   Data           1  mqtt_loop.o(.data)
     timeout_count                            0x20000034   Data           4  mqtt_loop.o(.data)
     .data                                    0x20000038   Section        4  usart2.o(.data)
-    .data                                    0x2000003c   Section        4  stdout.o(.data)
-    .data                                    0x20000040   Section        4  mvars.o(.data)
+    .data                                    0x2000003c   Section        4  timer.o(.data)
+    .data                                    0x20000040   Section        4  stdout.o(.data)
     .data                                    0x20000044   Section        4  mvars.o(.data)
-    .bss                                     0x20000048   Section      432  mqtt_loop.o(.bss)
-    .bss                                     0x200001f8   Section      256  usart2.o(.bss)
-    .bss                                     0x200002f8   Section       44  localtime.o(.bss)
-    _tms                                     0x200002f8   Data          44  localtime.o(.bss)
-    HEAP                                     0x20000328   Section      512  startup_stm32f10x_hd.o(HEAP)
-    STACK                                    0x20000528   Section     1024  startup_stm32f10x_hd.o(STACK)
+    .data                                    0x20000048   Section        4  mvars.o(.data)
+    .bss                                     0x2000004c   Section      736  mqtt_loop.o(.bss)
+    .bss                                     0x2000032c   Section      256  usart2.o(.bss)
+    .bss                                     0x2000042c   Section       44  localtime.o(.bss)
+    _tms                                     0x2000042c   Data          44  localtime.o(.bss)
+    HEAP                                     0x20000458   Section      512  startup_stm32f10x_hd.o(HEAP)
+    STACK                                    0x20000658   Section     1024  startup_stm32f10x_hd.o(STACK)
 
     Global Symbols
 
@@ -1113,178 +1149,192 @@ Image Symbol Table
     USART_ClearFlag                          0x08001297   Thumb Code    18  stm32f10x_usart.o(.text)
     USART_GetITStatus                        0x080012a9   Thumb Code    84  stm32f10x_usart.o(.text)
     USART_ClearITPendingBit                  0x080012fd   Thumb Code    52  stm32f10x_usart.o(.text)
-    main                                     0x08001331   Thumb Code    38  main.o(.text)
-    NMI_Handler                              0x080013a9   Thumb Code     2  stm32f10x_it.o(.text)
-    HardFault_Handler                        0x080013ab   Thumb Code     4  stm32f10x_it.o(.text)
-    MemManage_Handler                        0x080013af   Thumb Code     4  stm32f10x_it.o(.text)
-    BusFault_Handler                         0x080013b3   Thumb Code     4  stm32f10x_it.o(.text)
-    UsageFault_Handler                       0x080013b7   Thumb Code     4  stm32f10x_it.o(.text)
-    SVC_Handler                              0x080013bb   Thumb Code     2  stm32f10x_it.o(.text)
-    DebugMon_Handler                         0x080013bd   Thumb Code     2  stm32f10x_it.o(.text)
-    PendSV_Handler                           0x080013bf   Thumb Code     2  stm32f10x_it.o(.text)
-    SysTick_Handler                          0x080013c1   Thumb Code     2  stm32f10x_it.o(.text)
-    EXTI0_IRQHandler                         0x080013c3   Thumb Code     2  stm32f10x_it.o(.text)
-    USART1_IRQHandler                        0x080013c5   Thumb Code     2  stm32f10x_it.o(.text)
-    USART2_IRQHandler                        0x080013c7   Thumb Code    52  stm32f10x_it.o(.text)
-    RTC_IRQHandler                           0x080013fb   Thumb Code     2  stm32f10x_it.o(.text)
-    Mqtt_RB16                                0x08001409   Thumb Code    14  mqtt.o(.text)
-    Mqtt_RB64                                0x08001417   Thumb Code    96  mqtt.o(.text)
-    Mqtt_WB16                                0x08001477   Thumb Code    10  mqtt.o(.text)
-    Mqtt_WB32                                0x08001481   Thumb Code    18  mqtt.o(.text)
-    Mqtt_ReadLength                          0x08001493   Thumb Code    70  mqtt.o(.text)
-    Mqtt_DumpLength                          0x080014d9   Thumb Code    44  mqtt.o(.text)
-    Mqtt_AppendLength                        0x08001505   Thumb Code    66  mqtt.o(.text)
-    Mqtt_EraseLength                         0x08001547   Thumb Code    72  mqtt.o(.text)
-    Mqtt_PktWriteString                      0x0800158f   Thumb Code    38  mqtt.o(.text)
-    Mqtt_CheckClentIdentifier                0x080015b5   Thumb Code    42  mqtt.o(.text)
-    Mqtt_GetDataPointPktInfo                 0x080016f3   Thumb Code    86  mqtt.o(.text)
-    Mqtt_HasIllegalCharacter                 0x08001749   Thumb Code     6  mqtt.o(.text)
-    Mqtt_FormatTime                          0x0800174f   Thumb Code    90  mqtt.o(.text)
-    Mqtt_HandlePingResp                      0x080017a9   Thumb Code    32  mqtt.o(.text)
-    Mqtt_HandleConnAck                       0x080017c9   Thumb Code    70  mqtt.o(.text)
-    Mqtt_SendPkt                             0x0800180f   Thumb Code   164  mqtt.o(.text)
-    Mqtt_HandlePubAck                        0x08001be1   Thumb Code    54  mqtt.o(.text)
-    Mqtt_HandlePubRec                        0x08001c5d   Thumb Code   112  mqtt.o(.text)
-    Mqtt_HandlePubRel                        0x08001d1b   Thumb Code   114  mqtt.o(.text)
-    Mqtt_HandlePubComp                       0x08001d8d   Thumb Code    54  mqtt.o(.text)
-    Mqtt_HandleSubAck                        0x08001dc3   Thumb Code    86  mqtt.o(.text)
-    Mqtt_HandleUnsubAck                      0x08001e19   Thumb Code    54  mqtt.o(.text)
-    Mqtt_InitContext                         0x08001f0d   Thumb Code    46  mqtt.o(.text)
-    Mqtt_DestroyContext                      0x08001f3b   Thumb Code    20  mqtt.o(.text)
-    Mqtt_RecvPkt                             0x08001f4f   Thumb Code   120  mqtt.o(.text)
-    Mqtt_PackConnectPkt                      0x08001fc7   Thumb Code   548  mqtt.o(.text)
-    Mqtt_PackPublishPkt                      0x080021eb   Thumb Code   300  mqtt.o(.text)
-    Mqtt_SetPktDup                           0x08002317   Thumb Code    46  mqtt.o(.text)
-    Mqtt_PackSubscribePkt                    0x08002345   Thumb Code   240  mqtt.o(.text)
-    Mqtt_AppendSubscribeTopic                0x08002435   Thumb Code   156  mqtt.o(.text)
-    Mqtt_PackUnsubscribePkt                  0x080024d1   Thumb Code   176  mqtt.o(.text)
-    Mqtt_AppendUnsubscribeTopic              0x08002581   Thumb Code   148  mqtt.o(.text)
-    Mqtt_PackPingReqPkt                      0x08002615   Thumb Code    46  mqtt.o(.text)
-    Mqtt_PackDisconnectPkt                   0x08002643   Thumb Code    46  mqtt.o(.text)
-    Mqtt_PackCmdRetPkt                       0x08002671   Thumb Code   106  mqtt.o(.text)
-    Mqtt_PackDataPointStart                  0x080026db   Thumb Code   172  mqtt.o(.text)
-    Mqtt_PackDataPointStartNormal            0x08002787   Thumb Code    64  mqtt.o(.text)
-    Mqtt_AppendDPNull                        0x08002929   Thumb Code    28  mqtt.o(.text)
-    Mqtt_AppendDPInt                         0x08002945   Thumb Code    60  mqtt.o(.text)
-    Mqtt_AppendDPDouble                      0x08002981   Thumb Code    64  mqtt.o(.text)
-    Mqtt_AppendDPString                      0x080029c1   Thumb Code    86  mqtt.o(.text)
-    Mqtt_AppendDPStartSubobject              0x08002a17   Thumb Code   172  mqtt.o(.text)
-    Mqtt_AppendDPStartObject                 0x08002ac3   Thumb Code   130  mqtt.o(.text)
-    Mqtt_AppendDPFinishSubobject             0x08002b45   Thumb Code   148  mqtt.o(.text)
-    Mqtt_AppendDPFinishObject                0x08002bd9   Thumb Code    26  mqtt.o(.text)
-    Mqtt_AppendDPSubvalueInt                 0x08002cdf   Thumb Code    48  mqtt.o(.text)
-    Mqtt_AppendDPSubvalueDouble              0x08002d0f   Thumb Code    56  mqtt.o(.text)
-    Mqtt_AppendDPSubvalueString              0x08002d47   Thumb Code    72  mqtt.o(.text)
-    Mqtt_PackDataPointFinish                 0x08002d8f   Thumb Code   140  mqtt.o(.text)
-    Mqtt_PackDataPointByBinary               0x08002e1b   Thumb Code   436  mqtt.o(.text)
-    MqttBuffer_Init                          0x08002fed   Thumb Code    20  mqtt_buffer.o(.text)
-    MqttBuffer_Reset                         0x08003001   Thumb Code    56  mqtt_buffer.o(.text)
-    MqttBuffer_Destroy                       0x08003039   Thumb Code    12  mqtt_buffer.o(.text)
-    MqttBuffer_AllocExtent                   0x08003045   Thumb Code   192  mqtt_buffer.o(.text)
-    MqttBuffer_AppendExtent                  0x08003105   Thumb Code    30  mqtt_buffer.o(.text)
-    MqttBuffer_Append                        0x08003123   Thumb Code    78  mqtt_buffer.o(.text)
-    MQTT_Loop                                0x08003ba7   Thumb Code   230  mqtt_loop.o(.text)
-    USART1_Init                              0x08003e75   Thumb Code   152  usart1.o(.text)
-    USART1_Write                             0x08003f0d   Thumb Code    48  usart1.o(.text)
-    fputc                                    0x08003f3d   Thumb Code    32  usart1.o(.text)
-    USART2_Init                              0x08003f65   Thumb Code   158  usart2.o(.text)
-    USART2_Write                             0x08004003   Thumb Code    56  usart2.o(.text)
-    SendCmd                                  0x0800403b   Thumb Code    96  usart2.o(.text)
-    USART2_GetRcvNum                         0x0800409b   Thumb Code     6  usart2.o(.text)
-    USART2_GetRcvData                        0x080040a1   Thumb Code    36  usart2.o(.text)
-    hexdump                                  0x080040f1   Thumb Code    46  utils.o(.text)
-    prvucMBBIN2CHAR                          0x0800411f   Thumb Code    34  utils.o(.text)
-    usMBCRC16                                0x08004141   Thumb Code    48  utils.o(.text)
-    mDelay                                   0x08004171   Thumb Code    24  utils.o(.text)
-    uDelay                                   0x08004189   Thumb Code    18  utils.o(.text)
-    ESP8266_Init                             0x080041b1   Thumb Code   146  esp8266.o(.text)
-    ESP8266_SendData                         0x08004243   Thumb Code    48  esp8266.o(.text)
-    USART2_SendData                          0x08004273   Thumb Code    18  esp8266.o(.text)
-    GPIO_I2C_Configuration                   0x080042ed   Thumb Code    68  hal_i2c.o(.text)
-    I2C_Configuration                        0x08004331   Thumb Code    88  hal_i2c.o(.text)
-    Check_I2C_Device_Ready                   0x08004389   Thumb Code    12  hal_i2c.o(.text)
-    Hal_I2C_Init                             0x08004395   Thumb Code    30  hal_i2c.o(.text)
-    Hal_I2C_ByteWrite                        0x080043b3   Thumb Code   148  hal_i2c.o(.text)
-    Hal_I2C_ByteRead                         0x08004447   Thumb Code   196  hal_i2c.o(.text)
-    Hal_I2C_MutiRead                         0x0800450b   Thumb Code   212  hal_i2c.o(.text)
-    __aeabi_ldivmod                          0x0800460d   Thumb Code    98  ldiv.o(.text)
-    __rt_ctype_table                         0x08004671   Thumb Code     4  ctype_o.o(.text)
-    localtime                                0x08004679   Thumb Code   138  localtime.o(.text)
-    strftime                                 0x0800470d   Thumb Code   450  strftime.o(.text)
-    ___aeabi_memcpy8$move                    0x0800498d   Thumb Code     0  memmovea.o(.text)
-    __aeabi_memcpy                           0x0800498d   Thumb Code    64  memmovea.o(.text)
-    __aeabi_memcpy4                          0x0800498d   Thumb Code     0  memmovea.o(.text)
-    __aeabi_memmove                          0x0800498d   Thumb Code     0  memmovea.o(.text)
-    __aeabi_memmove4                         0x0800498d   Thumb Code     0  memmovea.o(.text)
-    __aeabi_memmove8                         0x0800498d   Thumb Code     0  memmovea.o(.text)
-    __aeabi_memset                           0x080049cd   Thumb Code    14  memseta.o(.text)
-    __aeabi_memset4                          0x080049cd   Thumb Code     0  memseta.o(.text)
-    __aeabi_memset8                          0x080049cd   Thumb Code     0  memseta.o(.text)
-    __aeabi_memclr                           0x080049db   Thumb Code     4  memseta.o(.text)
-    __aeabi_memclr4                          0x080049db   Thumb Code     0  memseta.o(.text)
-    __aeabi_memclr8                          0x080049db   Thumb Code     0  memseta.o(.text)
-    _memset$wrapper                          0x080049df   Thumb Code    18  memseta.o(.text)
-    strstr                                   0x080049f1   Thumb Code    36  strstr.o(.text)
-    strlen                                   0x08004a15   Thumb Code    14  strlen.o(.text)
-    strcpy                                   0x08004a23   Thumb Code    18  strcpy.o(.text)
-    __aeabi_dadd                             0x08004a35   Thumb Code   322  dadd.o(.text)
-    __aeabi_dsub                             0x08004b77   Thumb Code     6  dadd.o(.text)
-    __aeabi_drsub                            0x08004b7d   Thumb Code     6  dadd.o(.text)
-    __aeabi_dmul                             0x08004b83   Thumb Code   228  dmul.o(.text)
-    __aeabi_cdrcmple                         0x08004c69   Thumb Code    48  cdrcmple.o(.text)
-    __aeabi_uidiv                            0x08004c99   Thumb Code     0  uidiv.o(.text)
-    __aeabi_uidivmod                         0x08004c99   Thumb Code    44  uidiv.o(.text)
-    __aeabi_uldivmod                         0x08004cc5   Thumb Code    98  uldiv.o(.text)
-    __aeabi_llsl                             0x08004d27   Thumb Code    30  llshl.o(.text)
-    _ll_shift_l                              0x08004d27   Thumb Code     0  llshl.o(.text)
-    __aeabi_llsr                             0x08004d45   Thumb Code    32  llushr.o(.text)
-    _ll_ushift_r                             0x08004d45   Thumb Code     0  llushr.o(.text)
-    __aeabi_lasr                             0x08004d65   Thumb Code    36  llsshr.o(.text)
-    _ll_sshift_r                             0x08004d65   Thumb Code     0  llsshr.o(.text)
-    __I$use$fp                               0x08004d89   Thumb Code     0  iusefp.o(.text)
-    _double_round                            0x08004d89   Thumb Code    30  depilogue.o(.text)
-    _double_epilogue                         0x08004da7   Thumb Code   156  depilogue.o(.text)
-    __aeabi_ddiv                             0x08004e43   Thumb Code   222  ddiv.o(.text)
-    __aeabi_d2ulz                            0x08004f21   Thumb Code    48  dfixul.o(.text)
-    __scatterload                            0x08004f51   Thumb Code    28  init.o(.text)
-    __scatterload_rt2                        0x08004f51   Thumb Code     0  init.o(.text)
-    __0printf                                0x08004f75   Thumb Code    22  printfa.o(i.__0printf)
-    __1printf                                0x08004f75   Thumb Code     0  printfa.o(i.__0printf)
-    __2printf                                0x08004f75   Thumb Code     0  printfa.o(i.__0printf)
-    __c89printf                              0x08004f75   Thumb Code     0  printfa.o(i.__0printf)
-    printf                                   0x08004f75   Thumb Code     0  printfa.o(i.__0printf)
-    __0snprintf                              0x08004f95   Thumb Code    36  printfa.o(i.__0snprintf)
-    __1snprintf                              0x08004f95   Thumb Code     0  printfa.o(i.__0snprintf)
-    __2snprintf                              0x08004f95   Thumb Code     0  printfa.o(i.__0snprintf)
-    __c89snprintf                            0x08004f95   Thumb Code     0  printfa.o(i.__0snprintf)
-    snprintf                                 0x08004f95   Thumb Code     0  printfa.o(i.__0snprintf)
-    __0sprintf                               0x08004fbd   Thumb Code    34  printfa.o(i.__0sprintf)
-    __1sprintf                               0x08004fbd   Thumb Code     0  printfa.o(i.__0sprintf)
-    __2sprintf                               0x08004fbd   Thumb Code     0  printfa.o(i.__0sprintf)
-    __c89sprintf                             0x08004fbd   Thumb Code     0  printfa.o(i.__0sprintf)
-    sprintf                                  0x08004fbd   Thumb Code     0  printfa.o(i.__0sprintf)
-    __scatterload_copy                       0x08004fe5   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08004ff3   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08004ff5   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    free                                     0x080058b9   Thumb Code    76  malloc.o(i.free)
-    malloc                                   0x08005909   Thumb Code    92  malloc.o(i.malloc)
-    __ctype_table                            0x08005e77   Data         129  ctype_o.o(.constdata)
-    Region$$Table$$Base                      0x0800608c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080060ac   Number         0  anon$$obj.o(Region$$Table)
+    main                                     0x08001331   Thumb Code    46  main.o(.text)
+    NMI_Handler                              0x080013b1   Thumb Code     2  stm32f10x_it.o(.text)
+    HardFault_Handler                        0x080013b3   Thumb Code     4  stm32f10x_it.o(.text)
+    MemManage_Handler                        0x080013b7   Thumb Code     4  stm32f10x_it.o(.text)
+    BusFault_Handler                         0x080013bb   Thumb Code     4  stm32f10x_it.o(.text)
+    UsageFault_Handler                       0x080013bf   Thumb Code     4  stm32f10x_it.o(.text)
+    SVC_Handler                              0x080013c3   Thumb Code     2  stm32f10x_it.o(.text)
+    DebugMon_Handler                         0x080013c5   Thumb Code     2  stm32f10x_it.o(.text)
+    PendSV_Handler                           0x080013c7   Thumb Code     2  stm32f10x_it.o(.text)
+    EXTI0_IRQHandler                         0x080013c9   Thumb Code     2  stm32f10x_it.o(.text)
+    USART1_IRQHandler                        0x080013cb   Thumb Code     2  stm32f10x_it.o(.text)
+    USART2_IRQHandler                        0x080013cd   Thumb Code    52  stm32f10x_it.o(.text)
+    RTC_IRQHandler                           0x08001401   Thumb Code     2  stm32f10x_it.o(.text)
+    Mqtt_RB16                                0x08001411   Thumb Code    14  mqtt.o(.text)
+    Mqtt_RB64                                0x0800141f   Thumb Code    96  mqtt.o(.text)
+    Mqtt_WB16                                0x0800147f   Thumb Code    10  mqtt.o(.text)
+    Mqtt_WB32                                0x08001489   Thumb Code    18  mqtt.o(.text)
+    Mqtt_ReadLength                          0x0800149b   Thumb Code    70  mqtt.o(.text)
+    Mqtt_DumpLength                          0x080014e1   Thumb Code    44  mqtt.o(.text)
+    Mqtt_AppendLength                        0x0800150d   Thumb Code    66  mqtt.o(.text)
+    Mqtt_EraseLength                         0x0800154f   Thumb Code    72  mqtt.o(.text)
+    Mqtt_PktWriteString                      0x08001597   Thumb Code    38  mqtt.o(.text)
+    Mqtt_CheckClentIdentifier                0x080015bd   Thumb Code    42  mqtt.o(.text)
+    Mqtt_GetDataPointPktInfo                 0x080016fb   Thumb Code    86  mqtt.o(.text)
+    Mqtt_HasIllegalCharacter                 0x08001751   Thumb Code     6  mqtt.o(.text)
+    Mqtt_FormatTime                          0x08001757   Thumb Code    90  mqtt.o(.text)
+    Mqtt_HandlePingResp                      0x080017b1   Thumb Code    32  mqtt.o(.text)
+    Mqtt_HandleConnAck                       0x080017d1   Thumb Code    70  mqtt.o(.text)
+    Mqtt_SendPkt                             0x08001817   Thumb Code   164  mqtt.o(.text)
+    Mqtt_HandlePubAck                        0x08001be9   Thumb Code    54  mqtt.o(.text)
+    Mqtt_HandlePubRec                        0x08001c65   Thumb Code   112  mqtt.o(.text)
+    Mqtt_HandlePubRel                        0x08001d23   Thumb Code   114  mqtt.o(.text)
+    Mqtt_HandlePubComp                       0x08001d95   Thumb Code    54  mqtt.o(.text)
+    Mqtt_HandleSubAck                        0x08001dcb   Thumb Code    86  mqtt.o(.text)
+    Mqtt_HandleUnsubAck                      0x08001e21   Thumb Code    54  mqtt.o(.text)
+    Mqtt_InitContext                         0x08001f15   Thumb Code    46  mqtt.o(.text)
+    Mqtt_DestroyContext                      0x08001f43   Thumb Code    20  mqtt.o(.text)
+    Mqtt_RecvPkt                             0x08001f57   Thumb Code   120  mqtt.o(.text)
+    Mqtt_PackConnectPkt                      0x08001fcf   Thumb Code   548  mqtt.o(.text)
+    Mqtt_PackPublishPkt                      0x080021f3   Thumb Code   300  mqtt.o(.text)
+    Mqtt_SetPktDup                           0x0800231f   Thumb Code    46  mqtt.o(.text)
+    Mqtt_PackSubscribePkt                    0x0800234d   Thumb Code   240  mqtt.o(.text)
+    Mqtt_AppendSubscribeTopic                0x0800243d   Thumb Code   156  mqtt.o(.text)
+    Mqtt_PackUnsubscribePkt                  0x080024d9   Thumb Code   176  mqtt.o(.text)
+    Mqtt_AppendUnsubscribeTopic              0x08002589   Thumb Code   148  mqtt.o(.text)
+    Mqtt_PackPingReqPkt                      0x0800261d   Thumb Code    46  mqtt.o(.text)
+    Mqtt_PackDisconnectPkt                   0x0800264b   Thumb Code    46  mqtt.o(.text)
+    Mqtt_PackCmdRetPkt                       0x08002679   Thumb Code   106  mqtt.o(.text)
+    Mqtt_PackDataPointStart                  0x080026e3   Thumb Code   172  mqtt.o(.text)
+    Mqtt_PackDataPointStartNormal            0x0800278f   Thumb Code    64  mqtt.o(.text)
+    Mqtt_AppendDPNull                        0x08002931   Thumb Code    28  mqtt.o(.text)
+    Mqtt_AppendDPInt                         0x0800294d   Thumb Code    60  mqtt.o(.text)
+    Mqtt_AppendDPDouble                      0x08002989   Thumb Code    64  mqtt.o(.text)
+    Mqtt_AppendDPString                      0x080029c9   Thumb Code    86  mqtt.o(.text)
+    Mqtt_AppendDPStartSubobject              0x08002a1f   Thumb Code   172  mqtt.o(.text)
+    Mqtt_AppendDPStartObject                 0x08002acb   Thumb Code   194  mqtt.o(.text)
+    Mqtt_AppendDPFinishSubobject             0x08002b8d   Thumb Code   148  mqtt.o(.text)
+    Mqtt_AppendDPFinishObject                0x08002c21   Thumb Code    26  mqtt.o(.text)
+    Mqtt_AppendDPSubvalueInt                 0x08002d27   Thumb Code    48  mqtt.o(.text)
+    Mqtt_AppendDPSubvalueDouble              0x08002d57   Thumb Code    56  mqtt.o(.text)
+    Mqtt_AppendDPSubvalueString              0x08002d8f   Thumb Code    72  mqtt.o(.text)
+    Mqtt_PackDataPointFinish                 0x08002dd7   Thumb Code   140  mqtt.o(.text)
+    Mqtt_PackDataPointByBinary               0x08002e63   Thumb Code   470  mqtt.o(.text)
+    MqttBuffer_Init                          0x08003039   Thumb Code    20  mqtt_buffer.o(.text)
+    MqttBuffer_Reset                         0x0800304d   Thumb Code    56  mqtt_buffer.o(.text)
+    MqttBuffer_Destroy                       0x08003085   Thumb Code    12  mqtt_buffer.o(.text)
+    MqttBuffer_AllocExtent                   0x08003091   Thumb Code   192  mqtt_buffer.o(.text)
+    MqttBuffer_AppendExtent                  0x08003151   Thumb Code    30  mqtt_buffer.o(.text)
+    MqttBuffer_Append                        0x0800316f   Thumb Code    78  mqtt_buffer.o(.text)
+    MQTT_Loop                                0x08003ee5   Thumb Code   236  mqtt_loop.o(.text)
+    USART1_Init                              0x08004141   Thumb Code   152  usart1.o(.text)
+    USART1_Write                             0x080041d9   Thumb Code    48  usart1.o(.text)
+    fputc                                    0x08004209   Thumb Code    32  usart1.o(.text)
+    USART2_Init                              0x08004231   Thumb Code   158  usart2.o(.text)
+    USART2_Write                             0x080042cf   Thumb Code    56  usart2.o(.text)
+    SendCmd                                  0x08004307   Thumb Code    96  usart2.o(.text)
+    USART2_GetRcvNum                         0x08004367   Thumb Code     6  usart2.o(.text)
+    USART2_GetRcvData                        0x0800436d   Thumb Code    36  usart2.o(.text)
+    hexdump                                  0x080043bd   Thumb Code    46  utils.o(.text)
+    prvucMBBIN2CHAR                          0x080043eb   Thumb Code    34  utils.o(.text)
+    usMBCRC16                                0x0800440d   Thumb Code    48  utils.o(.text)
+    mDelay                                   0x0800443d   Thumb Code    24  utils.o(.text)
+    uDelay                                   0x08004455   Thumb Code    18  utils.o(.text)
+    ESP8266_Init                             0x0800447d   Thumb Code   146  esp8266.o(.text)
+    ESP8266_SendData                         0x0800450f   Thumb Code    48  esp8266.o(.text)
+    USART2_SendData                          0x0800453f   Thumb Code    18  esp8266.o(.text)
+    GPIO_I2C_Configuration                   0x080045b9   Thumb Code    68  hal_i2c.o(.text)
+    I2C_Configuration                        0x080045fd   Thumb Code    88  hal_i2c.o(.text)
+    Check_I2C_Device_Ready                   0x08004655   Thumb Code    12  hal_i2c.o(.text)
+    Hal_I2C_Init                             0x08004661   Thumb Code    30  hal_i2c.o(.text)
+    Hal_I2C_ByteWrite                        0x0800467f   Thumb Code   148  hal_i2c.o(.text)
+    Hal_I2C_ByteRead                         0x08004713   Thumb Code   196  hal_i2c.o(.text)
+    Hal_I2C_MutiRead                         0x080047d7   Thumb Code   212  hal_i2c.o(.text)
+    dht11_gpio_input                         0x080048d9   Thumb Code    40  dht11.o(.text)
+    dht11_gpio_output                        0x08004901   Thumb Code    40  dht11.o(.text)
+    dht11_reset                              0x08004929   Thumb Code    46  dht11.o(.text)
+    dht11_scan                               0x08004957   Thumb Code    14  dht11.o(.text)
+    dht11_read_bit                           0x08004965   Thumb Code    62  dht11.o(.text)
+    dht11_read_byte                          0x080049a3   Thumb Code    34  dht11.o(.text)
+    dht11_read_data                          0x080049c5   Thumb Code   108  dht11.o(.text)
+    systick_init                             0x08004a35   Thumb Code    90  timer.o(.text)
+    timing_delay_decrement                   0x08004a8f   Thumb Code    18  timer.o(.text)
+    SysTick_Handler                          0x08004aa1   Thumb Code     8  timer.o(.text)
+    delay_us                                 0x08004aa9   Thumb Code    20  timer.o(.text)
+    __aeabi_ldivmod                          0x08004ad1   Thumb Code    98  ldiv.o(.text)
+    __rt_ctype_table                         0x08004b35   Thumb Code     4  ctype_o.o(.text)
+    localtime                                0x08004b3d   Thumb Code   138  localtime.o(.text)
+    strftime                                 0x08004bd1   Thumb Code   450  strftime.o(.text)
+    ___aeabi_memcpy8$move                    0x08004e51   Thumb Code     0  memmovea.o(.text)
+    __aeabi_memcpy                           0x08004e51   Thumb Code    64  memmovea.o(.text)
+    __aeabi_memcpy4                          0x08004e51   Thumb Code     0  memmovea.o(.text)
+    __aeabi_memmove                          0x08004e51   Thumb Code     0  memmovea.o(.text)
+    __aeabi_memmove4                         0x08004e51   Thumb Code     0  memmovea.o(.text)
+    __aeabi_memmove8                         0x08004e51   Thumb Code     0  memmovea.o(.text)
+    __aeabi_memset                           0x08004e91   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x08004e91   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x08004e91   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x08004e9f   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x08004e9f   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x08004e9f   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x08004ea3   Thumb Code    18  memseta.o(.text)
+    strstr                                   0x08004eb5   Thumb Code    36  strstr.o(.text)
+    strlen                                   0x08004ed9   Thumb Code    14  strlen.o(.text)
+    strcpy                                   0x08004ee7   Thumb Code    18  strcpy.o(.text)
+    __aeabi_dadd                             0x08004ef9   Thumb Code   322  dadd.o(.text)
+    __aeabi_dsub                             0x0800503b   Thumb Code     6  dadd.o(.text)
+    __aeabi_drsub                            0x08005041   Thumb Code     6  dadd.o(.text)
+    __aeabi_dmul                             0x08005047   Thumb Code   228  dmul.o(.text)
+    __aeabi_ddiv                             0x0800512b   Thumb Code   222  ddiv.o(.text)
+    __aeabi_ui2d                             0x08005209   Thumb Code    26  dfltui.o(.text)
+    __aeabi_d2iz                             0x08005223   Thumb Code    62  dfixi.o(.text)
+    __aeabi_cdrcmple                         0x08005261   Thumb Code    48  cdrcmple.o(.text)
+    __aeabi_uidiv                            0x08005291   Thumb Code     0  uidiv.o(.text)
+    __aeabi_uidivmod                         0x08005291   Thumb Code    44  uidiv.o(.text)
+    __aeabi_uldivmod                         0x080052bd   Thumb Code    98  uldiv.o(.text)
+    __aeabi_llsl                             0x0800531f   Thumb Code    30  llshl.o(.text)
+    _ll_shift_l                              0x0800531f   Thumb Code     0  llshl.o(.text)
+    __aeabi_llsr                             0x0800533d   Thumb Code    32  llushr.o(.text)
+    _ll_ushift_r                             0x0800533d   Thumb Code     0  llushr.o(.text)
+    __aeabi_lasr                             0x0800535d   Thumb Code    36  llsshr.o(.text)
+    _ll_sshift_r                             0x0800535d   Thumb Code     0  llsshr.o(.text)
+    __I$use$fp                               0x08005381   Thumb Code     0  iusefp.o(.text)
+    _double_round                            0x08005381   Thumb Code    30  depilogue.o(.text)
+    _double_epilogue                         0x0800539f   Thumb Code   156  depilogue.o(.text)
+    __aeabi_d2ulz                            0x0800543b   Thumb Code    48  dfixul.o(.text)
+    __scatterload                            0x0800546d   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x0800546d   Thumb Code     0  init.o(.text)
+    __0printf                                0x08005491   Thumb Code    22  printfa.o(i.__0printf)
+    __1printf                                0x08005491   Thumb Code     0  printfa.o(i.__0printf)
+    __2printf                                0x08005491   Thumb Code     0  printfa.o(i.__0printf)
+    __c89printf                              0x08005491   Thumb Code     0  printfa.o(i.__0printf)
+    printf                                   0x08005491   Thumb Code     0  printfa.o(i.__0printf)
+    __0snprintf                              0x080054b1   Thumb Code    36  printfa.o(i.__0snprintf)
+    __1snprintf                              0x080054b1   Thumb Code     0  printfa.o(i.__0snprintf)
+    __2snprintf                              0x080054b1   Thumb Code     0  printfa.o(i.__0snprintf)
+    __c89snprintf                            0x080054b1   Thumb Code     0  printfa.o(i.__0snprintf)
+    snprintf                                 0x080054b1   Thumb Code     0  printfa.o(i.__0snprintf)
+    __0sprintf                               0x080054d9   Thumb Code    34  printfa.o(i.__0sprintf)
+    __1sprintf                               0x080054d9   Thumb Code     0  printfa.o(i.__0sprintf)
+    __2sprintf                               0x080054d9   Thumb Code     0  printfa.o(i.__0sprintf)
+    __c89sprintf                             0x080054d9   Thumb Code     0  printfa.o(i.__0sprintf)
+    sprintf                                  0x080054d9   Thumb Code     0  printfa.o(i.__0sprintf)
+    __scatterload_copy                       0x08005501   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x0800550f   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08005511   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    free                                     0x08005dd5   Thumb Code    76  malloc.o(i.free)
+    malloc                                   0x08005e25   Thumb Code    92  malloc.o(i.malloc)
+    __ctype_table                            0x080063d3   Data         129  ctype_o.o(.constdata)
+    Region$$Table$$Base                      0x080065e8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08006608   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f10x.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f10x.o(.data)
     ir_state                                 0x20000028   Data           1  mqtt_loop.o(.data)
     key_event                                0x2000002c   Data           4  mqtt_loop.o(.data)
     usart2_rcv_len                           0x20000038   Data           4  usart2.o(.data)
-    __stdout                                 0x2000003c   Data           4  stdout.o(.data)
-    __microlib_freelist                      0x20000040   Data           4  mvars.o(.data)
-    __microlib_freelist_initialised          0x20000044   Data           4  mvars.o(.data)
-    send_buf                                 0x20000048   Data         128  mqtt_loop.o(.bss)
-    smpctx                                   0x200000c8   Data         304  mqtt_loop.o(.bss)
-    usart2_rcv_buf                           0x200001f8   Data         256  usart2.o(.bss)
-    __heap_base                              0x20000328   Data           0  startup_stm32f10x_hd.o(HEAP)
-    __heap_limit                             0x20000528   Data           0  startup_stm32f10x_hd.o(HEAP)
-    __initial_sp                             0x20000928   Data           0  startup_stm32f10x_hd.o(STACK)
+    gTimingDelay                             0x2000003c   Data           4  timer.o(.data)
+    __stdout                                 0x20000040   Data           4  stdout.o(.data)
+    __microlib_freelist                      0x20000044   Data           4  mvars.o(.data)
+    __microlib_freelist_initialised          0x20000048   Data           4  mvars.o(.data)
+    send_buf                                 0x2000004c   Data         128  mqtt_loop.o(.bss)
+    smpctx                                   0x200000cc   Data         304  mqtt_loop.o(.bss)
+    smpktx                                   0x200001fc   Data         304  mqtt_loop.o(.bss)
+    usart2_rcv_buf                           0x2000032c   Data         256  usart2.o(.bss)
+    __heap_base                              0x20000458   Data           0  startup_stm32f10x_hd.o(HEAP)
+    __heap_limit                             0x20000658   Data           0  startup_stm32f10x_hd.o(HEAP)
+    __initial_sp                             0x20000a58   Data           0  startup_stm32f10x_hd.o(STACK)
 
 
 
@@ -1294,22 +1344,22 @@ Memory Map of the image
 
   Image Entry point : 0x08000145
 
-  Load Region LR_1 (Base: 0x08000000, Size: 0x000060f4, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x08000000, Size: 0x00006654, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x08000000, Size: 0x000060ac, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x08000000, Size: 0x00006608, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x00000130   Data   RO            3    RESET               startup_stm32f10x_hd.o
-    0x08000130   0x00000000   Code   RO          738  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000130   0x00000004   Code   RO         1141    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x08000134   0x00000004   Code   RO         1144    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000138   0x00000000   Code   RO         1146    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000138   0x00000000   Code   RO         1148    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000138   0x00000008   Code   RO         1149    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000140   0x00000000   Code   RO         1151    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000140   0x00000000   Code   RO         1153    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000140   0x00000004   Code   RO         1142    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000130   0x00000000   Code   RO          793  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000130   0x00000004   Code   RO         1200    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x08000134   0x00000004   Code   RO         1203    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000138   0x00000000   Code   RO         1205    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000138   0x00000000   Code   RO         1207    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000138   0x00000008   Code   RO         1208    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000140   0x00000000   Code   RO         1210    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000140   0x00000000   Code   RO         1212    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000140   0x00000004   Code   RO         1201    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x08000144   0x00000024   Code   RO            4  * .text               startup_stm32f10x_hd.o
     0x08000168   0x000001e0   Code   RO           24    .text               system_stm32f10x.o
     0x08000348   0x000000dc   Code   RO          121    .text               misc.o
@@ -1317,97 +1367,101 @@ Memory Map of the image
     0x08000780   0x00000404   Code   RO          281    .text               stm32f10x_i2c.o
     0x08000b84   0x000003a4   Code   RO          317    .text               stm32f10x_rcc.o
     0x08000f28   0x00000408   Code   RO          379    .text               stm32f10x_usart.o
-    0x08001330   0x00000078   Code   RO          403    .text               main.o
-    0x080013a8   0x00000060   Code   RO          466    .text               stm32f10x_it.o
-    0x08001408   0x00001be4   Code   RO          482    .text               mqtt.o
-    0x08002fec   0x000001a0   Code   RO          523    .text               mqtt_buffer.o
-    0x0800318c   0x00000ce8   Code   RO          558    .text               mqtt_loop.o
-    0x08003e74   0x000000f0   Code   RO          582    .text               usart1.o
-    0x08003f64   0x0000018c   Code   RO          601    .text               usart2.o
-    0x080040f0   0x000000c0   Code   RO          659    .text               utils.o
-    0x080041b0   0x0000013c   Code   RO          683    .text               esp8266.o
-    0x080042ec   0x00000320   Code   RO          695    .text               hal_i2c.o
-    0x0800460c   0x00000062   Code   RO          741    .text               mc_w.l(ldiv.o)
-    0x0800466e   0x00000002   PAD
-    0x08004670   0x00000008   Code   RO          743    .text               mc_w.l(ctype_o.o)
-    0x08004678   0x00000094   Code   RO          773    .text               mc_w.l(localtime.o)
-    0x0800470c   0x00000280   Code   RO          777    .text               mc_w.l(strftime.o)
-    0x0800498c   0x00000040   Code   RO          787    .text               mc_w.l(memmovea.o)
-    0x080049cc   0x00000024   Code   RO          789    .text               mc_w.l(memseta.o)
-    0x080049f0   0x00000024   Code   RO          791    .text               mc_w.l(strstr.o)
-    0x08004a14   0x0000000e   Code   RO          795    .text               mc_w.l(strlen.o)
-    0x08004a22   0x00000012   Code   RO          797    .text               mc_w.l(strcpy.o)
-    0x08004a34   0x0000014e   Code   RO         1094    .text               mf_w.l(dadd.o)
-    0x08004b82   0x000000e4   Code   RO         1096    .text               mf_w.l(dmul.o)
-    0x08004c66   0x00000002   PAD
-    0x08004c68   0x00000030   Code   RO         1110    .text               mf_w.l(cdrcmple.o)
-    0x08004c98   0x0000002c   Code   RO         1156    .text               mc_w.l(uidiv.o)
-    0x08004cc4   0x00000062   Code   RO         1158    .text               mc_w.l(uldiv.o)
-    0x08004d26   0x0000001e   Code   RO         1160    .text               mc_w.l(llshl.o)
-    0x08004d44   0x00000020   Code   RO         1162    .text               mc_w.l(llushr.o)
-    0x08004d64   0x00000024   Code   RO         1164    .text               mc_w.l(llsshr.o)
-    0x08004d88   0x00000000   Code   RO         1175    .text               mc_w.l(iusefp.o)
-    0x08004d88   0x000000ba   Code   RO         1178    .text               mf_w.l(depilogue.o)
-    0x08004e42   0x000000de   Code   RO         1180    .text               mf_w.l(ddiv.o)
-    0x08004f20   0x00000030   Code   RO         1184    .text               mf_w.l(dfixul.o)
-    0x08004f50   0x00000024   Code   RO         1186    .text               mc_w.l(init.o)
-    0x08004f74   0x00000020   Code   RO         1038    i.__0printf         mc_w.l(printfa.o)
-    0x08004f94   0x00000028   Code   RO         1039    i.__0snprintf       mc_w.l(printfa.o)
-    0x08004fbc   0x00000028   Code   RO         1040    i.__0sprintf        mc_w.l(printfa.o)
-    0x08004fe4   0x0000000e   Code   RO         1192    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08004ff2   0x00000002   Code   RO         1193    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08004ff4   0x0000000e   Code   RO         1194    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08005002   0x00000002   PAD
-    0x08005004   0x00000164   Code   RO         1045    i._fp_digits        mc_w.l(printfa.o)
-    0x08005168   0x000006dc   Code   RO         1046    i._printf_core      mc_w.l(printfa.o)
-    0x08005844   0x00000024   Code   RO         1047    i._printf_post_padding  mc_w.l(printfa.o)
-    0x08005868   0x0000002e   Code   RO         1048    i._printf_pre_padding  mc_w.l(printfa.o)
-    0x08005896   0x00000016   Code   RO         1049    i._snputc           mc_w.l(printfa.o)
-    0x080058ac   0x0000000a   Code   RO         1050    i._sputc            mc_w.l(printfa.o)
-    0x080058b6   0x00000002   PAD
-    0x080058b8   0x00000050   Code   RO         1066    i.free              mc_w.l(malloc.o)
-    0x08005908   0x0000006c   Code   RO         1067    i.malloc            mc_w.l(malloc.o)
-    0x08005974   0x00000156   Data   RO          483    .constdata          mqtt.o
-    0x08005aca   0x00000017   Data   RO          524    .constdata          mqtt_buffer.o
-    0x08005ae1   0x00000003   PAD
-    0x08005ae4   0x00000150   Data   RO          560    .constdata          mqtt_loop.o
-    0x08005c34   0x00000008   Data   RO          603    .constdata          usart2.o
-    0x08005c3c   0x00000200   Data   RO          660    .constdata          utils.o
-    0x08005e3c   0x0000003b   Data   RO          696    .constdata          hal_i2c.o
-    0x08005e77   0x00000081   Data   RO          744    .constdata          mc_w.l(ctype_o.o)
-    0x08005ef8   0x00000004   Data   RO          745    .constdata          mc_w.l(ctype_o.o)
-    0x08005efc   0x0000000c   Data   RO          775    .constdata          mc_w.l(localtime.o)
-    0x08005f08   0x00000056   Data   RO          778    .constdata          mc_w.l(strftime.o)
-    0x08005f5e   0x00000002   PAD
-    0x08005f60   0x000000cb   Data   RO          561    .conststring        mqtt_loop.o
-    0x0800602b   0x00000001   PAD
-    0x0800602c   0x00000060   Data   RO          697    .conststring        hal_i2c.o
-    0x0800608c   0x00000020   Data   RO         1190    Region$$Table       anon$$obj.o
+    0x08001330   0x00000080   Code   RO          403    .text               main.o
+    0x080013b0   0x00000060   Code   RO          469    .text               stm32f10x_it.o
+    0x08001410   0x00001c28   Code   RO          485    .text               mqtt.o
+    0x08003038   0x000001a0   Code   RO          526    .text               mqtt_buffer.o
+    0x080031d8   0x00000f68   Code   RO          561    .text               mqtt_loop.o
+    0x08004140   0x000000f0   Code   RO          588    .text               usart1.o
+    0x08004230   0x0000018c   Code   RO          607    .text               usart2.o
+    0x080043bc   0x000000c0   Code   RO          665    .text               utils.o
+    0x0800447c   0x0000013c   Code   RO          689    .text               esp8266.o
+    0x080045b8   0x00000320   Code   RO          701    .text               hal_i2c.o
+    0x080048d8   0x0000015c   Code   RO          730    .text               dht11.o
+    0x08004a34   0x0000009c   Code   RO          742    .text               timer.o
+    0x08004ad0   0x00000062   Code   RO          796    .text               mc_w.l(ldiv.o)
+    0x08004b32   0x00000002   PAD
+    0x08004b34   0x00000008   Code   RO          798    .text               mc_w.l(ctype_o.o)
+    0x08004b3c   0x00000094   Code   RO          828    .text               mc_w.l(localtime.o)
+    0x08004bd0   0x00000280   Code   RO          832    .text               mc_w.l(strftime.o)
+    0x08004e50   0x00000040   Code   RO          842    .text               mc_w.l(memmovea.o)
+    0x08004e90   0x00000024   Code   RO          844    .text               mc_w.l(memseta.o)
+    0x08004eb4   0x00000024   Code   RO          846    .text               mc_w.l(strstr.o)
+    0x08004ed8   0x0000000e   Code   RO          850    .text               mc_w.l(strlen.o)
+    0x08004ee6   0x00000012   Code   RO          852    .text               mc_w.l(strcpy.o)
+    0x08004ef8   0x0000014e   Code   RO         1149    .text               mf_w.l(dadd.o)
+    0x08005046   0x000000e4   Code   RO         1151    .text               mf_w.l(dmul.o)
+    0x0800512a   0x000000de   Code   RO         1153    .text               mf_w.l(ddiv.o)
+    0x08005208   0x0000001a   Code   RO         1159    .text               mf_w.l(dfltui.o)
+    0x08005222   0x0000003e   Code   RO         1163    .text               mf_w.l(dfixi.o)
+    0x08005260   0x00000030   Code   RO         1169    .text               mf_w.l(cdrcmple.o)
+    0x08005290   0x0000002c   Code   RO         1215    .text               mc_w.l(uidiv.o)
+    0x080052bc   0x00000062   Code   RO         1217    .text               mc_w.l(uldiv.o)
+    0x0800531e   0x0000001e   Code   RO         1219    .text               mc_w.l(llshl.o)
+    0x0800533c   0x00000020   Code   RO         1221    .text               mc_w.l(llushr.o)
+    0x0800535c   0x00000024   Code   RO         1223    .text               mc_w.l(llsshr.o)
+    0x08005380   0x00000000   Code   RO         1234    .text               mc_w.l(iusefp.o)
+    0x08005380   0x000000ba   Code   RO         1237    .text               mf_w.l(depilogue.o)
+    0x0800543a   0x00000030   Code   RO         1241    .text               mf_w.l(dfixul.o)
+    0x0800546a   0x00000002   PAD
+    0x0800546c   0x00000024   Code   RO         1243    .text               mc_w.l(init.o)
+    0x08005490   0x00000020   Code   RO         1093    i.__0printf         mc_w.l(printfa.o)
+    0x080054b0   0x00000028   Code   RO         1094    i.__0snprintf       mc_w.l(printfa.o)
+    0x080054d8   0x00000028   Code   RO         1095    i.__0sprintf        mc_w.l(printfa.o)
+    0x08005500   0x0000000e   Code   RO         1249    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x0800550e   0x00000002   Code   RO         1250    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08005510   0x0000000e   Code   RO         1251    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x0800551e   0x00000002   PAD
+    0x08005520   0x00000164   Code   RO         1100    i._fp_digits        mc_w.l(printfa.o)
+    0x08005684   0x000006dc   Code   RO         1101    i._printf_core      mc_w.l(printfa.o)
+    0x08005d60   0x00000024   Code   RO         1102    i._printf_post_padding  mc_w.l(printfa.o)
+    0x08005d84   0x0000002e   Code   RO         1103    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x08005db2   0x00000016   Code   RO         1104    i._snputc           mc_w.l(printfa.o)
+    0x08005dc8   0x0000000a   Code   RO         1105    i._sputc            mc_w.l(printfa.o)
+    0x08005dd2   0x00000002   PAD
+    0x08005dd4   0x00000050   Code   RO         1121    i.free              mc_w.l(malloc.o)
+    0x08005e24   0x0000006c   Code   RO         1122    i.malloc            mc_w.l(malloc.o)
+    0x08005e90   0x0000016f   Data   RO          486    .constdata          mqtt.o
+    0x08005fff   0x00000017   Data   RO          527    .constdata          mqtt_buffer.o
+    0x08006016   0x00000002   PAD
+    0x08006018   0x00000178   Data   RO          563    .constdata          mqtt_loop.o
+    0x08006190   0x00000008   Data   RO          609    .constdata          usart2.o
+    0x08006198   0x00000200   Data   RO          666    .constdata          utils.o
+    0x08006398   0x0000003b   Data   RO          702    .constdata          hal_i2c.o
+    0x080063d3   0x00000081   Data   RO          799    .constdata          mc_w.l(ctype_o.o)
+    0x08006454   0x00000004   Data   RO          800    .constdata          mc_w.l(ctype_o.o)
+    0x08006458   0x0000000c   Data   RO          830    .constdata          mc_w.l(localtime.o)
+    0x08006464   0x00000056   Data   RO          833    .constdata          mc_w.l(strftime.o)
+    0x080064ba   0x00000002   PAD
+    0x080064bc   0x000000cb   Data   RO          564    .conststring        mqtt_loop.o
+    0x08006587   0x00000001   PAD
+    0x08006588   0x00000060   Data   RO          703    .conststring        hal_i2c.o
+    0x080065e8   0x00000020   Data   RO         1247    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Base: 0x20000000, Size: 0x00000048, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Base: 0x20000000, Size: 0x0000004c, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x00000014   Data   RW           25    .data               system_stm32f10x.o
     0x20000014   0x00000014   Data   RW          318    .data               stm32f10x_rcc.o
-    0x20000028   0x00000010   Data   RW          562    .data               mqtt_loop.o
-    0x20000038   0x00000004   Data   RW          604    .data               usart2.o
-    0x2000003c   0x00000004   Data   RW         1155    .data               mc_w.l(stdout.o)
-    0x20000040   0x00000004   Data   RW         1166    .data               mc_w.l(mvars.o)
-    0x20000044   0x00000004   Data   RW         1167    .data               mc_w.l(mvars.o)
+    0x20000028   0x00000010   Data   RW          565    .data               mqtt_loop.o
+    0x20000038   0x00000004   Data   RW          610    .data               usart2.o
+    0x2000003c   0x00000004   Data   RW          743    .data               timer.o
+    0x20000040   0x00000004   Data   RW         1214    .data               mc_w.l(stdout.o)
+    0x20000044   0x00000004   Data   RW         1225    .data               mc_w.l(mvars.o)
+    0x20000048   0x00000004   Data   RW         1226    .data               mc_w.l(mvars.o)
 
 
-    Execution Region ER_ZI (Base: 0x20000048, Size: 0x000008e0, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Base: 0x2000004c, Size: 0x00000a0c, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000048   0x000001b0   Zero   RW          559    .bss                mqtt_loop.o
-    0x200001f8   0x00000100   Zero   RW          602    .bss                usart2.o
-    0x200002f8   0x0000002c   Zero   RW          774    .bss                mc_w.l(localtime.o)
-    0x20000324   0x00000004   PAD
-    0x20000328   0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_hd.o
-    0x20000528   0x00000400   Zero   RW            1    STACK               startup_stm32f10x_hd.o
+    0x2000004c   0x000002e0   Zero   RW          562    .bss                mqtt_loop.o
+    0x2000032c   0x00000100   Zero   RW          608    .bss                usart2.o
+    0x2000042c   0x0000002c   Zero   RW          829    .bss                mc_w.l(localtime.o)
+    0x20000458   0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_hd.o
+    0x20000658   0x00000400   Zero   RW            1    STACK               startup_stm32f10x_hd.o
 
 
 ==============================================================================
@@ -1418,28 +1472,30 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
          0          0          0          0          0       4492   core_cm3.o
-       316        104          0          0          0       1296   esp8266.o
-       800         46        155          0          0       2939   hal_i2c.o
-       120         82          0          0          0       2235   main.o
-       220         22          0          0          0       1737   misc.o
-      7140        214        342          0          0      33226   mqtt.o
-       416         28         23          0          0       2659   mqtt_buffer.o
-      3304       1400        539         16        432       7573   mqtt_loop.o
-        36          8        304          0       1536        836   startup_stm32f10x_hd.o
-       860         38          0          0          0       5585   stm32f10x_gpio.o
-      1028         16          0          0          0       9043   stm32f10x_i2c.o
-        96         12          0          0          0       1726   stm32f10x_it.o
-       932         36          0         20          0       8728   stm32f10x_rcc.o
-      1032         22          0          0          0       8308   stm32f10x_usart.o
-       480         38          0         20          0     236151   system_stm32f10x.o
-       240          8          0          0          0       1565   usart1.o
-       396         44          8          4        256       2354   usart2.o
-       192         22        512          0          0       1866   utils.o
+       348          4          0          0          0       1875   dht11.o
+       316        104          0          0          0       1272   esp8266.o
+       800         46        155          0          0       2919   hal_i2c.o
+       128         82          0          0          0       2227   main.o
+       220         22          0          0          0       1721   misc.o
+      7208        222        367          0          0      33298   mqtt.o
+       416         28         23          0          0       2635   mqtt_buffer.o
+      3944       1512        579         16        736       8528   mqtt_loop.o
+        36          8        304          0       1536        824   startup_stm32f10x_hd.o
+       860         38          0          0          0       5565   stm32f10x_gpio.o
+      1028         16          0          0          0       9023   stm32f10x_i2c.o
+        96         14          0          0          0       1618   stm32f10x_it.o
+       932         36          0         20          0       8692   stm32f10x_rcc.o
+      1032         22          0          0          0       8288   stm32f10x_usart.o
+       480         38          0         20          0     236051   system_stm32f10x.o
+       156         20          0          4          0      16581   timer.o
+       240          8          0          0          0       1545   usart1.o
+       396         44          8          4        256       2326   usart2.o
+       192         22        512          0          0       1834   utils.o
 
     ----------------------------------------------------------------------
-     17608       2140       1919         60       2224     332319   Object Totals
+     18828       2286       1983         64       2528     351314   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         0          0          4          0          0          0   (incl. Padding)
+         0          0          3          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1478,22 +1534,24 @@ Image component sizes
        334          0          0          0          0        148   dadd.o
        222          0          0          0          0        100   ddiv.o
        186          0          0          0          0        176   depilogue.o
+        62          0          0          0          0         80   dfixi.o
         48          0          0          0          0         68   dfixul.o
+        26          0          0          0          0         76   dfltui.o
        228          0          0          0          0         96   dmul.o
 
     ----------------------------------------------------------------------
-      4988        352        233         12         48       2736   Library Totals
-         8          0          2          0          4          0   (incl. Padding)
+      5076        352        233         12         44       2892   Library Totals
+         8          0          2          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
 
       3914        352        231         12         44       2080   mc_w.l
-      1066          0          0          0          0        656   mf_w.l
+      1154          0          0          0          0        812   mf_w.l
 
     ----------------------------------------------------------------------
-      4988        352        233         12         48       2736   Library Totals
+      5076        352        233         12         44       2892   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -1502,15 +1560,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     22596       2492       2152         72       2272     332295   Grand Totals
-     22596       2492       2152         72       2272     332295   ELF Image Totals
-     22596       2492       2152         72          0          0   ROM Totals
+     23904       2638       2216         76       2572     351186   Grand Totals
+     23904       2638       2216         76       2572     351186   ELF Image Totals
+     23904       2638       2216         76          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                24748 (  24.17kB)
-    Total RW  Size (RW Data + ZI Data)              2344 (   2.29kB)
-    Total ROM Size (Code + RO Data + RW Data)      24820 (  24.24kB)
+    Total RO  Size (Code + RO Data)                26120 (  25.51kB)
+    Total RW  Size (RW Data + ZI Data)              2648 (   2.59kB)
+    Total ROM Size (Code + RO Data + RW Data)      26196 (  25.58kB)
 
 ==============================================================================
 

@@ -46,3 +46,5 @@
 .\objects\mqtt_loop.o: ..\Devices\hal_i2c.h
 .\objects\mqtt_loop.o: ..\Protocol\mqtt\mqtt_loop.h
 .\objects\mqtt_loop.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+.\objects\mqtt_loop.o: ..\Devices\dht11.h
+.\objects\mqtt_loop.o: ..\Devices\timer.h

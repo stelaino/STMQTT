@@ -44,3 +44,4 @@
 .\objects\main.o: ..\Protocol\mqtt\mqtt_buffer.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\errno.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+.\objects\main.o: ..\Devices\timer.h

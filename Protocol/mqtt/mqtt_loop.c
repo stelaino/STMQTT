@@ -20,9 +20,11 @@
 #include "usart2.h"
 #include "sht20.h"
 #include "mqtt_loop.h"
+#include "dht11.h"
 
 unsigned char send_buf[MAX_MQTT_LEN];
 struct MqttSampleContext smpctx[1];
+struct MqttSampleContext smpktx[1];
 u8 ir_state = 0xff;
 int key_event = 0;
 
@@ -284,7 +286,7 @@ static int MqttSample_CmdConnect(struct MqttSampleContext *ctx)
     return 0;
 }
 /*如果要使用下面函数，请打开宏*/
-#if 0
+#if 1
 /**
   * @brief 发送MQTT Ping报文
     * @param  ctx:上下文变量
@@ -314,59 +316,27 @@ static int MqttSample_CmdPublish(struct MqttSampleContext *ctx)
 {
     uint8_t cause = 0; //only for test
     int err = 0;
-
-    static unsigned char count = 0;
-    int64_t ts = 0; //no time
-    uint16_t temprature[1], rh[1];
-    printf("%s %d,count=%d,cause=%d\n", __func__, __LINE__, count, cause);
-    // ts = (int64_t)time(NULL) * 1000;
-
-    //SHT2x_MeasureHM(SHT20_Measurement_RH_HM, temprature);
-		temperature[0]=35;
-    mDelay(1500);
-    //SHT2x_MeasureHM(SHT20_Measurement_T_HM, rh);
-		rh[0]=66;
-
+	
+		u8 buffer[5];
+    int hum=0;
+		int temp=0;
+    int64_t ts = 10; //no time
+    printf("%s %d,cause=%d\n", __func__, __LINE__,  cause);
+		if (dht11_read_data(buffer) == 0)
+		{
+				hum = (int)((buffer[0] + buffer[1] / 10.0)*100);
+				temp =(int)(( buffer[2] + buffer[3] / 10.0)*100);
+		}
     err |= Mqtt_PackDataPointStart(ctx->mqttbuf, 1, MQTT_QOS_LEVEL2, 0, 1);
-    if((count == 0) || (cause == EVENT))
-    {
-        err |= Mqtt_AppendDPStartObject(ctx->mqttbuf, DS_TO_PUBLISH, ts);
-        if(cause == TIME_OUT)
-        {
-            ir_state = !ir_state;
-        }
-        if(ir_state == 0x1)
-        {
-            err |= Mqtt_AppendDPSubvalueString(ctx->mqttbuf, DS_TO_PUBLISH, "设备在位");
-        }
-        else if(ir_state == 0)
-        {
-            err |= Mqtt_AppendDPSubvalueString(ctx->mqttbuf, DS_TO_PUBLISH, "设备离位");
-        }
-        else
-        {
-            err |= Mqtt_AppendDPSubvalueString(ctx->mqttbuf, DS_TO_PUBLISH, "未知");
-        }
-        if(count != 2)
-        {
-            count++;
-        }
-    }
-    else if(count == 1)
-    {
-        err |= Mqtt_AppendDPStartObject(ctx->mqttbuf, DS_TO_PUBLISH_T, ts);
-        err |= Mqtt_AppendDPSubvalueInt(ctx->mqttbuf, DS_TO_PUBLISH_T, temprature[0]);
-        count++;
-    }
-    else if(count == 2)
-    {
-        err |= Mqtt_AppendDPStartObject(ctx->mqttbuf, DS_TO_PUBLISH_RH, ts);
-        err |= Mqtt_AppendDPSubvalueInt(ctx->mqttbuf, DS_TO_PUBLISH_RH, rh[0]);
-        count = 0;
-
-    }
+		printf("%s %d\n", __func__, __LINE__);
+    err |= Mqtt_AppendDPStartObject(ctx->mqttbuf, SE_DP, ts);
+		printf("%s %d\n", __func__, __LINE__);
+    err |= Mqtt_AppendDPSubvalueInt(ctx->mqttbuf, "tempvalue", temp);
+		printf("%s %d\n", __func__, __LINE__);
     err |= Mqtt_AppendDPFinishObject(ctx->mqttbuf);
+		printf("%s %d\n", __func__, __LINE__);
     err |= Mqtt_PackDataPointFinish(ctx->mqttbuf);
+		printf("%s %d\n", __func__, __LINE__);
     if(err)
     {
         printf("Failed to pack data point package.err=%d\n", err);
@@ -393,9 +363,10 @@ static int MqttSample_CmdPublishNormal(struct MqttSampleContext *ctx, uint8_t ca
     unsigned char dis[3][64] = {"未知","设备在位","设备离位"};
     static unsigned char count = 0;
 
-    //uint16_t temprature[1], rh[1];
-		int temprature, rh;
-		unsigned char stemp[3],srh[3];
+		u8 buffer[5];
+    double hum=0;
+		double temp=0;
+		unsigned char stemp[5],shum[5];
     if(ctx->publish_state != 0)
     {
         printf("publsh busy\n");
@@ -403,18 +374,18 @@ static int MqttSample_CmdPublishNormal(struct MqttSampleContext *ctx, uint8_t ca
     }
     ctx->publish_state = 1;
     printf("%s %d,count=%d,cause=%d\n", __func__, __LINE__, count, cause);
-    // ts = (int64_t)time(NULL) * 1000;
-    //SHT2x_MeasureHM(SHT20_Measurement_RH_HM, temprature);
-		temprature=888;
+		if (dht11_read_data(buffer) == 0)
+		{
+				hum = buffer[0] + buffer[1] / 10.0;
+				temp = buffer[2] + buffer[3] / 10.0;
+		}
+		
     mDelay(1500);
-    //SHT2x_MeasureHM(SHT20_Measurement_T_HM, rh);
-		rh=999;
 
-		sprintf(stemp,"%d",temprature);
-		sprintf(srh,"%d",rh);
+		sprintf(stemp,"%.2f",temp);
+		sprintf(shum,"%.2f",hum);
     if((count == 0) || (cause == EVENT))
     {
-        //no time
         if(cause == TIME_OUT)
         {
             ir_state = !ir_state;
@@ -444,8 +415,9 @@ static int MqttSample_CmdPublishNormal(struct MqttSampleContext *ctx, uint8_t ca
         {
             return MQTTERR_OUTOFMEMORY;
         }
-        ext->payload[0] = ' ';
-        memcpy(&ext->payload[1], dis[ir_index], strlen((const char *)dis[ir_index]));
+				//ext->payload[0]=' ';
+       // memcpy(&ext->payload[1], dis[ir_index], strlen((const char *)dis[ir_index]));
+				memcpy(&ext->payload[0], dis[ir_index],strlen(dis[ir_index]));
         MqttBuffer_AppendExtent(ctx->mqttbuf, ext);
     }
     else if(count == 1)
@@ -458,9 +430,7 @@ static int MqttSample_CmdPublishNormal(struct MqttSampleContext *ctx, uint8_t ca
         {
             return MQTTERR_OUTOFMEMORY;
         }
-				ext->payload[0] = ' ';
-				ext->payload[1] = ' ';
-        memcpy(&ext->payload[2],stemp,3);
+        memcpy(&ext->payload[0],stemp,5);
         MqttBuffer_AppendExtent(ctx->mqttbuf, ext);
         count++;
     }
@@ -474,9 +444,7 @@ static int MqttSample_CmdPublishNormal(struct MqttSampleContext *ctx, uint8_t ca
         {
             return MQTTERR_OUTOFMEMORY;
         }
-				ext->payload[0] = ' ';
-				ext->payload[1] = ' ';
-        memcpy(&ext->payload[2],srh,3);
+        memcpy(&ext->payload[0],shum,5);
         MqttBuffer_AppendExtent(ctx->mqttbuf, ext);
         count = 0;
     }
@@ -692,6 +660,7 @@ void MQTT_Loop(void)
             //MqttSample_CmdPublish(smpctx,TIME_OUT);
             /*周期性发布温湿度和一个状态数据，状态每次取反*/
             publish_state = MqttSample_CmdPublishNormal(smpctx, TIME_OUT);
+						//publish_state = MqttSample_CmdPublish	(smpctx);
             if(publish_state < 0)
             {
                 timeout_count++;

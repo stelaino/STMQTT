@@ -1759,12 +1759,13 @@ int Mqtt_AppendDPStartObject(struct MqttBuffer *buf, const char *dsid, int64_t t
 {
     int err;
     char strtime[FORMAT_TIME_STRING_SIZE + 1];
-
+		printf("%s %d\n", __func__, __LINE__);
     if(MQTTERR_NOERROR != (err = Mqtt_AppendDPStartSubobject(buf, dsid)))
     {
+			printf("%s %d\n", __func__, __LINE__);
         return err;
     }
-
+		printf("%s %d\n", __func__, __LINE__);
     if(ts > 0)
     {
         if(0 == Mqtt_FormatTime(ts, strtime))
@@ -1777,7 +1778,7 @@ int Mqtt_AppendDPStartObject(struct MqttBuffer *buf, const char *dsid, int64_t t
     {
         strtime[0] = '\0';
     }
-
+		printf("%s %d\n", __func__, __LINE__);
     return Mqtt_AppendDPStartSubobject(buf, strtime);
 }
 
